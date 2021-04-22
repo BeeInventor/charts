@@ -2,6 +2,12 @@
 
 Collection of Helm charts that developed by the BeeInventor.
 
+## TL;DR
+
+```sh
+helm repo add beeinventor https://https://beeinventor.github.io/charts
+```
+
 ## Prerequisites
 
 - Kubernetes 1.12+
