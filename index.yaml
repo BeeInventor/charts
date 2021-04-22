@@ -5,9 +5,9 @@ entries:
       category: Infrastructure
     apiVersion: v2
     appVersion: 1.2.0
-    created: "2021-04-22T04:05:33.599307026Z"
+    created: "2021-04-22T04:09:37.569975402Z"
     description: A realtime distributed messaging platform
-    digest: 2a57cc945ed0248663b207b20f10922aaad0ab52715090f5d613543b578401b1
+    digest: ea3afcb08cbf69fed94154a040304c1746836e1a75275655e0a3570c69a66200
     home: https://github.com/beeinventor/charts/tree/master/beeinventor/nsq
     icon: https://nsq.io/static/img/nsq_blue.png
     keywords:
@@ -25,4 +25,4 @@ entries:
     urls:
     - https://BeeInventor.github.io/charts/nsq-1.0.0.tgz
     version: 1.0.0
-generated: "2021-04-22T04:05:33.598477194Z"
+generated: "2021-04-22T04:09:37.569243397Z"
