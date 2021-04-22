@@ -1,5 +1,7 @@
 # The BeeInventor Helm Charts
 
+![release chart](https://github.com/beeinventor/charts/actions/workflows/release-chart.yaml/badge.svg)
+
 Collection of Helm charts that developed by the BeeInventor.
 
 ## TL;DR
