@@ -16,7 +16,7 @@ Chart name
 nsqlookupd fullname
 */}}
 {{- define "nsq.nsqlookupd.fullname" -}}
-{{- if .Values.fullnameOverride -}}
+{{- if .Values.nsqlookupd.fullnameOverride -}}
 {{- .Values.nsqlookupd.fullnameOverride | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
 {{- printf "%s-%s" .Release.Name "nsqlookupd" -}}
@@ -27,7 +27,7 @@ nsqlookupd fullname
 nsqadmin fullname
 */}}
 {{- define "nsq.nsqadmin.fullname" -}}
-{{- if .Values.fullnameOverride -}}
+{{- if .Values.nsqadmin.fullnameOverride -}}
 {{- .Values.nsqadmin.fullnameOverride | trunc 63 | trimSuffix "-" -}}
 {{- else -}}
 {{- printf "%s-%s" .Release.Name "nsqadmin" -}}
