@@ -1,0 +1,21 @@
+annotations:
+  category: Infrastructure
+apiVersion: v2
+appVersion: 1.2.0
+description: A realtime distributed messaging platform
+engine: gotpl
+home: https://github.com/beeinventor/charts/tree/master/beeinventor/nsq
+icon: https://nsq.io/static/img/nsq_blue.png
+keywords:
+- nsq
+- nsqd
+- nsqlookupd
+- nsqadmin
+maintainers:
+- email: benhu@beeinventor.com
+  name: BeeInventor
+name: nsq
+sources:
+- https://github.com/beeinventor/charts/tree/master/beeinventor/nsq
+- https://nsq.io/
+version: 1.0.0
