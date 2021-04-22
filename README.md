@@ -1,6 +1,7 @@
 # The BeeInventor Helm Charts
 
 ![release chart](https://github.com/beeinventor/charts/actions/workflows/release-chart.yaml/badge.svg)
+[![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/nsq)](https://artifacthub.io/packages/search?repo=nsq)
 
 Collection of Helm charts that developed by the BeeInventor.
 
