@@ -53,8 +53,8 @@ nsqadmin:
     nodePort:
 
   ingress:
-    enabled: true
-    host: "nsqadmin.192.168.64.2.nip.io"
+    enabled: false
+    host: ""
     annotations: {}
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"

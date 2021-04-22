@@ -4,6 +4,13 @@ NSQ is a realtime distributed messaging platform designed to operate at scale, h
 
 This chart only provides `nsqlookupd` and `nsqadmin` components, since the best practice to deploy `nsqd` is to use the `Sidecar Pattern` that run with the app container in the pod.
 
+## TL;DR
+
+```sh
+helm repo add beeinventor https://beeinventor.github.io/charts
+helm install my-release beeinventor/nsq
+```
+
 ## Values
 
 The following table lists the configurable parameters of the nsq chart and their default values.

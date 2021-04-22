@@ -1,8 +1,10 @@
 {{- if .Values.nsqadmin.ingress.enabled -}}
-{{- if semverCompare ">=1.14-0" .Capabilities.KubeVersion.GitVersion -}}
-apiVersion: networking.k8s.io/v1beta1
-{{- else -}}
+{{- if semverCompare "<1.14-0" .Capabilities.KubeVersion.GitVersion }}
 apiVersion: extensions/v1beta1
+{{- else if semverCompare "<1.19-0" .Capabilities.KubeVersion.GitVersion }}
+apiVersion: networking.k8s.io/v1beta1
+{{- else }}
+apiVersion: networking.k8s.io/v1
 {{- end }}
 kind: Ingress
 metadata:
@@ -28,8 +30,18 @@ spec:
   - host: {{ .Values.nsqadmin.ingress.host | quote }}
     http:
       paths:
+      {{- if semverCompare "<1.19-0" .Capabilities.KubeVersion.GitVersion }}
       - path: /
         backend:
           serviceName: {{ include "nsq.nsqadmin.fullname" . }}
           servicePort: {{ .Values.nsqadmin.service.port }}
+      {{- else }}
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ include "nsq.nsqadmin.fullname" . }}
+            port:
+              number: {{ .Values.nsqadmin.service.port }}
+      {{- end }}
 {{- end }}
