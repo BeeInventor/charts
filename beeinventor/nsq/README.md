@@ -1,5 +1,7 @@
 # NSQ
 
+[![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/nsq)](https://artifacthub.io/packages/search?repo=nsq)
+
 NSQ is a realtime distributed messaging platform designed to operate at scale, handling billions of messages per day.
 
 This chart only provides `nsqlookupd` and `nsqadmin` components, since the best practice to deploy `nsqd` is to use the `Sidecar Pattern` that run with the app container in the pod.
