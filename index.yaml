@@ -3,9 +3,9 @@ entries:
   nsq:
   - apiVersion: v2
     appVersion: 1.2.0
-    created: "2021-05-17T06:38:52.173768948Z"
+    created: "2021-05-17T06:40:46.138260394Z"
     description: A realtime distributed messaging platform
-    digest: c7083ab81b6a2dff6ddfc53916e5f3d30316937151d8f845bffa9c31ff1e4349
+    digest: 02ba1bd275506c226aa321908c4a43bb4791911fb977a77eb27d65f4276998e8
     home: https://github.com/beeinventor/charts/tree/master/beeinventor/nsq
     icon: https://nsq.io/static/img/nsq_blue.png
     keywords:
@@ -99,9 +99,9 @@ entries:
   opendistro-es:
   - apiVersion: v1
     appVersion: 1.13.2
-    created: "2021-05-17T06:38:52.175876169Z"
+    created: "2021-05-17T06:40:46.140122526Z"
     description: Open Distro for Elasticsearch
-    digest: 1ba7a7d50017ea107f03afc1f077f934a89081018a6ddfb22e1eec357cd98266
+    digest: 84918bbb6babd542b80cff3523de667b254423c8f98675b1048c25ca7ea01283
     kubeVersion: ^1.10.0-0
     maintainers:
     - email: derek.heldt-werle@viasat.com
@@ -114,4 +114,4 @@ entries:
     urls:
     - https://BeeInventor.github.io/charts/opendistro-es-1.13.2.tgz
     version: 1.13.2
-generated: "2021-05-17T06:38:52.173113742Z"
+generated: "2021-05-17T06:40:46.137564181Z"
