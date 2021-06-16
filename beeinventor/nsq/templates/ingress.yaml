@@ -27,8 +27,7 @@ spec:
     {{- end }}
   {{- end }}
   rules:
-  - host: {{ .Values.nsqadmin.ingress.host | quote }}
-    http:
+  - http:
       paths:
       {{- if semverCompare "<1.19-0" .Capabilities.KubeVersion.GitVersion }}
       - path: /
@@ -44,4 +43,7 @@ spec:
             port:
               number: {{ .Values.nsqadmin.service.port }}
       {{- end }}
+    {{- if .Values.nsqadmin.ingress.host }}
+    host: {{ .Values.nsqadmin.ingress.host | quote }}
+    {{- end }}
 {{- end }}
