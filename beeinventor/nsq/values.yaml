@@ -131,7 +131,7 @@ nsqd:
     enabled: true
     size: 1Gi
     storageClass: "-"
-    existingClaim: "data"
+    existingClaim:
     annotations: {}
     accessModes:
       - ReadWriteOnce
