@@ -91,7 +91,7 @@ nsqd:
 
   fullnameOverride: ""
 
-  replicaCount: 1
+  replicaCount: 3
 
   extraArgs: []
 
@@ -120,10 +120,12 @@ nsqd:
 
   service:
     type: "headless"
-    tcpPort: 4150
-    tcpNodePort: 4150
-    httpPort: 4151
-    httpNodePort: 4151
+    ports:
+      tcp: 4150
+      http: 4151
+    node:
+      tcp: 4150
+      http: 4151
 
   persistence:
     enabled: true
