@@ -41,7 +41,7 @@ spec:
         - --broadcast-address=$(POD_IP)
         {{ $lookupdFullName := include "nsq.nsqlookupd.fullname" . -}}
         {{ range $i, $e := until (atoi (printf "%d" (int64 .Values.nsqlookupd.replicaCount))) -}}
-        - --lookupd-tcp-address={{ $lookupdFullName }}-{{ $i }}.{{ $lookupdFullName }}:4161
+        - --lookupd-tcp-address={{ $lookupdFullName }}-{{ $i }}.{{ $lookupdFullName }}:4160
         {{ end -}}
         - -data-path=/data
         ports:
@@ -86,11 +86,10 @@ spec:
   volumeClaimTemplates:
   - metadata:
       name: data
-      annotations:
     spec:
       accessModes:
-        - "ReadWriteOnce"
+      - "ReadWriteOnce"
       resources:
         requests:
-          storage: {{- toYaml .Values.nsqd.storageSize }}
+          storage: {{ .Values.nsqd.storageSize }}
 {{- end }}
