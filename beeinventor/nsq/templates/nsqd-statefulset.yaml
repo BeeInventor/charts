@@ -8,7 +8,7 @@ metadata:
 spec:
   replicas: {{ .Values.nsqd.replicaCount }}
   podManagementPolicy: {{ .Values.nsqd.podManagementPolicy }}
-  serviceName: {{ include "nsq.nsqd.fullname" . }}
+  serviceName: "{{ include "nsq.nsqd.fullname" . }}-headless"
   selector:
     matchLabels:
       {{- include "nsq.nsqd.selectorLabels" . | nindent 6 }}
@@ -80,16 +80,39 @@ spec:
       {{- end }}
       terminationGracePeriodSeconds: 5
       volumes:
-      - name: data
+      {{- if not .Values.nsqd.persistence.enabled }}
+      - name: "data"
+        emptyDir: {}
+      {{- else }}
+      {{- if .Values.nsqd.persistence.existingClaim }}
+      - name: "data"
         persistentVolumeClaim:
-          claimName: data
+          claimName: {{ .Values.nsqd.persistence.existingClaim }}
+      {{- end }}
+      {{- end }}
+  {{- if and .Values.nsqd.persistence.enabled (not .Values.nsqd.persistence.existingClaim) }}
   volumeClaimTemplates:
   - metadata:
+      annotations:
+      {{- range $key, $value := .Values.nsqd.persistence.annotations }}
+        {{ $key }}: {{ $value }}
+      {{- end }}
       name: data
     spec:
       accessModes:
-      - "ReadWriteOnce"
+      {{- range .Values.nsqd.persistence.accessModes }}
+        - {{ . | quote }}
+      {{- end }}
       resources:
         requests:
-          storage: {{ .Values.nsqd.storageSize }}
+          storage: {{ .Values.nsqd.persistence.size | quote }}
+    {{- if .Values.nsqd.persistence.storageClass }}
+    {{- if (eq "-" .Values.nsqd.persistence.storageClass) }}
+      storageClassName: ""
+    {{- else }}
+      storageClassName: "{{ .Values.nsqd.persistence.storageClass }}"
+    {{- end }}
+    {{- end }}
+  {{- end }}
 {{- end }}
+

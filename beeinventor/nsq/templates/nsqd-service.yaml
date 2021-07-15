@@ -1,0 +1,23 @@
+{{- if and .Values.nsqd.enabled (ne "headless" .Values.nsqd.service.type) -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "nsq.nsqd.fullname" . }}
+  labels:
+    {{- include "nsq.commonLabels" . | nindent 4 }}
+spec:
+  type: {{ .Values.nsqd.service.type }}
+  ports:
+  - port: {{ .Values.nsqd.service.httpPort }}
+    targetPort: http
+    {{- if eq "NodePort" .Values.nsqd.service.type }}
+    nodePort: {{ .Values.nsqd.service.httpNodePort }}
+    {{- end }}
+  - port: {{ .Values.nsqd.service.tcpPort }}
+    targetPort: tcp
+    {{- if eq "NodePort" .Values.nsqd.service.type }}
+    nodePort: {{ .Values.nsqd.service.tcpNodePort }}
+    {{- end }}
+  selector:
+    {{- include "nsq.nsqd.selectorLabels" . | nindent 4 }}
+{{- end }}

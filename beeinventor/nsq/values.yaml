@@ -118,4 +118,18 @@ nsqd:
 
   affinity: {}
 
-  storageSize: 1Gi
+  service:
+    type: "headless"
+    tcpPort: 4150
+    tcpNodePort: 4150
+    httpPort: 4151
+    httpNodePort: 4151
+
+  persistence:
+    enabled: true
+    size: 1Gi
+    storageClass: "-"
+    existingClaim: "data"
+    annotations: {}
+    accessModes:
+      - ReadWriteOnce
