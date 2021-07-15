@@ -123,9 +123,9 @@ nsqd:
     ports:
       tcp: 4150
       http: 4151
-    node:
-      tcp: 4150
-      http: 4151
+      node:
+        tcp: 4150
+        http: 4151
 
   persistence:
     enabled: true
