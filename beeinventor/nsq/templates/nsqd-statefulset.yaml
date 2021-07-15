@@ -45,9 +45,9 @@ spec:
         {{ end -}}
         - -data-path=/data
         ports:
-        - containerPort: {{ .Values.nsqd.ports.tcp }}
+        - containerPort: 4150
           name: tcp
-        - containerPort: {{ .Values.nsqd.ports.http }}
+        - containerPort: 4151
           name: http
         readinessProbe:
           httpGet:
