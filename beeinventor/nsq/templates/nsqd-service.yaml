@@ -8,16 +8,11 @@ metadata:
 spec:
   type: {{ .Values.nsqd.service.type }}
   ports:
-  - port: {{ .Values.nsqd.service.ports.http }}
+  - port: 4151
     targetPort: http
-    {{- if eq "NodePort" .Values.nsqd.service.type }}
-    nodePort: {{ .Values.nsqd.service.ports.node.http }}
-    {{- end }}
-  - port: {{ .Values.nsqd.service.ports.tcp }}
+  - protocol: TCP
+    port: 4150
     targetPort: tcp
-    {{- if eq "NodePort" .Values.nsqd.service.type }}
-    nodePort: {{ .Values.nsqd.service.ports.node.tcp }}
-    {{- end }}
   selector:
     {{- include "nsq.nsqd.selectorLabels" . | nindent 4 }}
 {{- end }}

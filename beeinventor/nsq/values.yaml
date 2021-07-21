@@ -119,19 +119,11 @@ nsqd:
   affinity: {}
 
   service:
-    type: "headless"
-    ports:
-      tcp: 4150
-      http: 4151
-      node:
-        tcp: 4150
-        http: 4151
+    type: ClusterIP
 
   persistence:
     enabled: true
     size: 1Gi
     storageClass: "-"
-    existingClaim:
-    annotations: {}
     accessModes:
       - ReadWriteOnce
