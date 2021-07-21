@@ -35,6 +35,17 @@ nsqadmin fullname
 {{- end }}
 
 {{/*
+nsqd fullname
+*/}}
+{{- define "nsq.nsqd.fullname" -}}
+{{- if .Values.nsqd.fullnameOverride -}}
+{{- .Values.nsqd.fullnameOverride | trunc 63 | trimSuffix "-" -}}
+{{- else -}}
+{{- printf "%s-%s" .Release.Name "nsqd" -}}
+{{- end }}
+{{- end }}
+
+{{/*
 Common labels
 */}}
 {{- define "nsq.commonLabels" -}}
@@ -57,4 +68,11 @@ nsqadmin selector labels
 */}}
 {{- define "nsq.nsqadmin.selectorLabels" -}}
 app.kubernetes.io/component: nsqadmin
+{{- end }}
+
+{{/*
+nsqd selector labels
+*/}}
+{{- define "nsq.nsqd.selectorLabels" -}}
+app.kubernetes.io/component: nsqd
 {{- end }}
