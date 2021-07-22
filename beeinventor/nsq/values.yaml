@@ -1,18 +1,18 @@
 # Default is chart name
-fullnameOverride: ""
+fullnameOverride:
 
 image:
   repository: nsqio/nsq
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag:
 
 imagePullSecrets: []
 
 nsqlookupd:
   enabled: true
 
-  fullnameOverride: ""
+  fullnameOverride:
 
   replicaCount: 3
 
@@ -43,7 +43,7 @@ nsqlookupd:
 nsqadmin:
   enabled: true
 
-  fullnameOverride: ""
+  fullnameOverride:
 
   replicaCount: 1
 
@@ -56,7 +56,7 @@ nsqadmin:
 
   ingress:
     enabled: false
-    host: ""
+    host:
     annotations:
       {}
       # kubernetes.io/ingress.class: nginx
@@ -87,9 +87,9 @@ nsqadmin:
   affinity: {}
 
 nsqd:
-  enabled: false
+  enabled: true
 
-  fullnameOverride: ""
+  fullnameOverride:
 
   replicaCount: 3
 
