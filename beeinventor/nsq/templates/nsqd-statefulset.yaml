@@ -84,7 +84,7 @@ spec:
       - name: "data"
         emptyDir: {}
       {{- end }}
-  {{- if and .Values.nsqd.persistence.enabled (not .Values.nsqd.persistence.existingClaim) }}
+  {{- if and .Values.nsqd.persistence.enabled }}
   volumeClaimTemplates:
   - metadata:
       name: data
@@ -102,4 +102,3 @@ spec:
     {{- end }}
   {{- end }}
 {{- end }}
-
