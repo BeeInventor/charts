@@ -17,5 +17,5 @@ spec:
     protocol: TCP
     targetPort: tcp
   selector:
-    {{- include "nsq.nsqd.selectorLabels" . | indent 4 }}
+    {{- include "nsq.nsqd.selectorLabels" . | nindent 4 }}
 {{- end }}
