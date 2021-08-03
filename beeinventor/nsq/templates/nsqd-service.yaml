@@ -10,8 +10,8 @@ spec:
   ports:
   - name: http
     port: 4151
+    protocol: TCP
     targetPort: http
-    protocol: HTTP
   - name: tcp
     port: 4150
     protocol: TCP
