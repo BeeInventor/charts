@@ -70,23 +70,18 @@ The following table lists the configurable parameters of the nsq chart and their
 
 ### nsqd
 
-| Value                    | Description                                                                         | Default              |
-|--------------------------|-------------------------------------------------------------------------------------|----------------------|
-| nsqd.enabled             | Enable the nsqd                                                                     | `true`               |
-| nsqd.fullnameOverride    | String to partially override nsq.nsqd.fullname                                      | `.Release.Name-nsqd` |
-| nsqd.replicaCount        | Number of nsqd replicas                                                             | `1`                  |
-| nsqd.priorityClassName   | The name of the kube priority class used. Defaults to global default.               | `nil`                |
-| nsqd.extraArgs           | Extra arguments to provide to the `nsqd` command                                    | `[]`                 |
-| nsqd.service.type        | The nsqd service type                                                               | `ClusterIP`          |
-| nsqd.ingress.enabled     | Enable the nsqd ingress                                                             | `false`              |
-| nsqd.ingress.host        | Host of the nsqd ingress                                                            | `nil`                |
-| nsqd.ingress.annotations | The annotations to attach to the ingress                                            | `{}`                 |
-| nsqd.ingress.tls         | TLS configurations for the hostname                                                 | `[]`                 |
-| nsqd.podAnnotations      | The annotations to attach to the nsqd pods                                          | `{}`                 |
-| nsqd.podSecurityContext  | The security context to attach to the nsqd pods                                     | `{}`                 |
-| nsqd.resources           | The resources to allocate to the nsqd pods                                          | `{}`                 |
-| nsqd.nodeSelector        | The tags that will be used to select the node on which the pods should be scheduled | `{}`                 |
-| nsqd.tolerations         | Tolerations for pod assignment                                                      | `[]`                 |
-| nsqd.affinity            | Affinity for pod assignment                                                         | `[]`                 |
-
-| nsqd.serviceAccountName  | The name of the service account used. Defaults to namespace default service account. | `nil`                |
+| Value                   | Description                                                                          | Default              |
+|-------------------------|--------------------------------------------------------------------------------------|----------------------|
+| nsqd.enabled            | Enable the nsqd                                                                      | `true`               |
+| nsqd.fullnameOverride   | String to partially override nsq.nsqd.fullname                                       | `.Release.Name-nsqd` |
+| nsqd.replicaCount       | Number of nsqd replicas                                                              | `1`                  |
+| nsqd.priorityClassName  | The name of the kube priority class used. Defaults to global default.                | `nil`                |
+| nsqd.extraArgs          | Extra arguments to provide to the `nsqd` command                                     | `[]`                 |
+| nsqd.service.type       | The nsqd service type                                                                | `ClusterIP`          |
+| nsqd.podAnnotations     | The annotations to attach to the nsqd pods                                           | `{}`                 |
+| nsqd.podSecurityContext | The security context to attach to the nsqd pods                                      | `{}`                 |
+| nsqd.resources          | The resources to allocate to the nsqd pods                                           | `{}`                 |
+| nsqd.serviceAccountName | The name of the service account used. Defaults to namespace default service account. | `nil`                |
+| nsqd.nodeSelector       | The tags that will be used to select the node on which the pods should be scheduled  | `{}`                 |
+| nsqd.tolerations        | Tolerations for pod assignment                                                       | `[]`                 |
+| nsqd.affinity           | Affinity for pod assignment                                                          | `[]`                 |
