@@ -16,6 +16,8 @@ nsqlookupd:
 
   replicaCount: 3
 
+  priorityClassName:
+
   extraArgs: []
 
   podManagementPolicy: Parallel
@@ -46,6 +48,8 @@ nsqadmin:
   fullnameOverride:
 
   replicaCount: 1
+
+  priorityClassName:
 
   extraArgs: []
 
@@ -92,6 +96,8 @@ nsqd:
   fullnameOverride:
 
   replicaCount: 3
+
+  priorityClassName:
 
   extraArgs: []
 

@@ -12,6 +12,7 @@ spec:
   selector:
     matchLabels:
       {{- include "nsq.nsqd.selectorLabels" . | nindent 6 }}
+  priorityClassName: {{ .Values.nsqd.priorityClassName }}
   template:
     metadata:
       {{- with .Values.nsqd.podAnnotations }}
@@ -44,6 +45,10 @@ spec:
         - --lookupd-tcp-address={{ $lookupdFullName }}-{{ $i }}.{{ $lookupdFullName }}:4160
         {{ end -}}
         - -data-path=/data
+        {{- if .Values.nsqd.extraArgs }}
+        {{ toYaml .Values.nsqd.extraArgs | indent 8 }}
+        {{- end }}
+        terminationMessagePolicy: FallbackToLogsOnError
         ports:
         - containerPort: 4150
           name: tcp
