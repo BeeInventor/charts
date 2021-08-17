@@ -71,6 +71,7 @@ spec:
         volumeMounts:
         - name: data
           mountPath: /data
+      serviceAccountName: {{ .Values.nsqd.serviceAccountName }}
       {{- with .Values.nsqd.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

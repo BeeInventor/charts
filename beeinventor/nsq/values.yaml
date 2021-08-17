@@ -36,6 +36,9 @@ nsqlookupd:
     # requests:
     #   cpu: 100m
     #   memory: 128Mi
+
+  serviceAccountName:
+
   nodeSelector: {}
 
   tolerations: []
@@ -84,6 +87,9 @@ nsqadmin:
     # requests:
     #   cpu: 100m
     #   memory: 128Mi
+
+  serviceAccountName:
+
   nodeSelector: {}
 
   tolerations: []
@@ -108,6 +114,8 @@ nsqd:
   podSecurityContext:
     {}
     # fsGroup: 2000
+
+  serviceAccountName:
 
   resources:
     {}
