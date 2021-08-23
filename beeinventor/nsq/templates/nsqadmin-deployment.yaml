@@ -35,6 +35,9 @@ spec:
         {{ range $i, $e := until (atoi (printf "%d" (int64 .Values.nsqlookupd.replicaCount))) -}}
         - --lookupd-http-address={{ $lookupdFullName }}-{{ $i }}.{{ $lookupdFullName }}:4161
         {{ end -}}
+        {{- if .Values.nsqadmin.extraArgs }}
+        {{ toYaml .Values.nsqadmin.extraArgs | trim | indent 8 }}
+        {{- end }}
         ports:
         - containerPort: 4171
           name: http
