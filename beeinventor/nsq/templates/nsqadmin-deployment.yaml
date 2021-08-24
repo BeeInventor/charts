@@ -10,6 +10,7 @@ spec:
   selector:
     matchLabels:
       {{- include "nsq.nsqadmin.selectorLabels" . | nindent 6 }}
+  priorityClassName: {{ .Values.nsqadmin.priorityClassName }}
   template:
     metadata:
       {{- with .Values.nsqadmin.podAnnotations }}
@@ -35,6 +36,10 @@ spec:
         {{ range $i, $e := until (atoi (printf "%d" (int64 .Values.nsqlookupd.replicaCount))) -}}
         - --lookupd-http-address={{ $lookupdFullName }}-{{ $i }}.{{ $lookupdFullName }}:4161
         {{ end -}}
+        {{- if .Values.nsqadmin.extraArgs }}
+        {{ toYaml .Values.nsqadmin.extraArgs | indent 8 }}
+        {{- end }}
+        terminationMessagePolicy: FallbackToLogsOnError
         ports:
         - containerPort: 4171
           name: http
@@ -48,6 +53,7 @@ spec:
             port: http
         resources:
           {{- toYaml .Values.resources | nindent 12 }}
+      serviceAccountName: {{ .Values.nsqlookupd.serviceAccountName }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

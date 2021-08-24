@@ -12,6 +12,7 @@ spec:
   selector:
     matchLabels:
       {{- include "nsq.nsqlookupd.selectorLabels" . | nindent 6 }}
+  priorityClassName: {{ .Values.nsqlookupd.priorityClassName }}
   template:
     metadata:
       {{- with .Values.nsqlookupd.podAnnotations }}
@@ -42,6 +43,7 @@ spec:
         {{- if .Values.nsqlookupd.extraArgs }}
         {{ toYaml .Values.nsqlookupd.extraArgs | trim | indent 8 }}
         {{- end }}
+        terminationMessagePolicy: FallbackToLogsOnError
         ports:
         - containerPort: 4160
           name: tcp
@@ -63,6 +65,7 @@ spec:
           timeoutSeconds: 5
         resources:
           {{- toYaml .Values.nsqlookupd.resources | nindent 12 }}
+      serviceAccountName: {{ .Values.nsqlookupd.serviceAccountName }}
       {{- with .Values.nsqlookupd.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

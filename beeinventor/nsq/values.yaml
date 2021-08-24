@@ -16,6 +16,8 @@ nsqlookupd:
 
   replicaCount: 3
 
+  priorityClassName:
+
   extraArgs: []
 
   podManagementPolicy: Parallel
@@ -34,6 +36,9 @@ nsqlookupd:
     # requests:
     #   cpu: 100m
     #   memory: 128Mi
+
+  serviceAccountName:
+
   nodeSelector: {}
 
   tolerations: []
@@ -46,6 +51,8 @@ nsqadmin:
   fullnameOverride:
 
   replicaCount: 1
+
+  priorityClassName:
 
   extraArgs: []
 
@@ -80,6 +87,9 @@ nsqadmin:
     # requests:
     #   cpu: 100m
     #   memory: 128Mi
+
+  serviceAccountName:
+
   nodeSelector: {}
 
   tolerations: []
@@ -93,6 +103,8 @@ nsqd:
 
   replicaCount: 3
 
+  priorityClassName:
+
   extraArgs: []
 
   podManagementPolicy: Parallel
@@ -102,6 +114,8 @@ nsqd:
   podSecurityContext:
     {}
     # fsGroup: 2000
+
+  serviceAccountName:
 
   resources:
     {}
