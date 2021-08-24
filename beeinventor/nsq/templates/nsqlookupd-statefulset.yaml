@@ -41,7 +41,7 @@ spec:
         args:
         - --broadcast-address=$(POD_IP)
         {{- if .Values.nsqlookupd.extraArgs }}
-        {{ toYaml .Values.nsqlookupd.extraArgs | trim | indent 8 }}
+        {{- toYaml .Values.nsqlookupd.extraArgs | trim | indent 8 }}
         {{- end }}
         terminationMessagePolicy: FallbackToLogsOnError
         ports:

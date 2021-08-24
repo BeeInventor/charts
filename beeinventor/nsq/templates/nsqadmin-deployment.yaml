@@ -37,7 +37,7 @@ spec:
         - --lookupd-http-address={{ $lookupdFullName }}-{{ $i }}.{{ $lookupdFullName }}:4161
         {{ end -}}
         {{- if .Values.nsqadmin.extraArgs }}
-        {{ toYaml .Values.nsqadmin.extraArgs | indent 8 }}
+        {{- toYaml .Values.nsqadmin.extraArgs | indent 8 }}
         {{- end }}
         terminationMessagePolicy: FallbackToLogsOnError
         ports:
