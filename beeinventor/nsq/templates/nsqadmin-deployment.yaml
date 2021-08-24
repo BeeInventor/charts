@@ -36,8 +36,8 @@ spec:
         {{ range $i, $e := until (atoi (printf "%d" (int64 .Values.nsqlookupd.replicaCount))) -}}
         - --lookupd-http-address={{ $lookupdFullName }}-{{ $i }}.{{ $lookupdFullName }}:4161
         {{ end -}}
-        {{- if .Values.nsqadmin.extraArgs }}
-        {{- toYaml .Values.nsqadmin.extraArgs | indent 8 }}
+        {{- range .Values.nsqadmin.extraArgs  }}
+        - {{ . }}
         {{- end }}
         terminationMessagePolicy: FallbackToLogsOnError
         ports:

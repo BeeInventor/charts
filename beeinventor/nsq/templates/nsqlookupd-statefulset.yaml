@@ -40,8 +40,8 @@ spec:
         - /nsqlookupd
         args:
         - --broadcast-address=$(POD_IP)
-        {{- if .Values.nsqlookupd.extraArgs }}
-        {{- toYaml .Values.nsqlookupd.extraArgs | trim | indent 8 }}
+        {{- range .Values.nsqlookupd.extraArgs  }}
+        - {{ . }}
         {{- end }}
         terminationMessagePolicy: FallbackToLogsOnError
         ports:
