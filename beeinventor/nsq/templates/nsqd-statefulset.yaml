@@ -45,8 +45,8 @@ spec:
         - --lookupd-tcp-address={{ $lookupdFullName }}-{{ $i }}.{{ $lookupdFullName }}:4160
         {{ end -}}
         - -data-path=/data
-        {{- if .Values.nsqd.extraArgs }}
-        {{- toYaml .Values.nsqd.extraArgs | indent 8 }}
+        {{- range .Values.nsqd.extraArgs  }}
+        - {{ . }}
         {{- end }}
         terminationMessagePolicy: FallbackToLogsOnError
         ports:
