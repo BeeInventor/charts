@@ -2,8 +2,6 @@
 
 NSQ is a realtime distributed messaging platform designed to operate at scale, handling billions of messages per day.
 
-This chart only provides `nsqlookupd` and `nsqadmin` components, since the best practice to deploy `nsqd` is to use the `Sidecar Pattern` that run with the app container in the pod.
-
 ## TL;DR
 
 ```sh
@@ -66,7 +64,6 @@ The following table lists the configurable parameters of the nsq chart and their
 | nsqadmin.nodeSelector        | The tags that will be used to select the node on which the pods should be scheduled  | `{}`                     |
 | nsqadmin.tolerations         | Tolerations for pod assignment                                                       | `[]`                     |
 | nsqadmin.affinity            | Affinity for pod assignment                                                          | `[]`                     |
-
 
 ### nsqd
 
