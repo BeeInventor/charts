@@ -46,7 +46,7 @@ spec:
         {{ end -}}
         - -data-path=/data
         {{- if .Values.nsqd.extraArgs }}
-        {{ toYaml .Values.nsqd.extraArgs | indent 8 }}
+        {{- toYaml .Values.nsqd.extraArgs | indent 8 }}
         {{- end }}
         terminationMessagePolicy: FallbackToLogsOnError
         ports:
