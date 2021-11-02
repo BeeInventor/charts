@@ -16,14 +16,8 @@
 {{- $serviceName := printf "%s-%s" (include "opendistro-es.fullname" .) "kibana-svc" }}
 {{- $servicePort := .Values.kibana.externalPort }}
 {{- $ingressPath := .Values.kibana.ingress.path }}
-{{- if semverCompare "<1.14-0" .Capabilities.KubeVersion.GitVersion }}
-apiVersion: extensions/v1beta1
-{{- else if semverCompare "<1.19-0" .Capabilities.KubeVersion.GitVersion }}
-apiVersion: networking.k8s.io/v1beta1
-{{- else }}
-apiVersion: networking.k8s.io/v1
-{{- end }}
 kind: Ingress
+apiVersion: networking.k8s.io/v1
 metadata:
   name: {{ template "opendistro-es.fullname" . }}-kibana-ing
   labels:
@@ -39,9 +33,12 @@ spec:
       http:
         paths:
           - path: {{ $ingressPath }}
+            pathType: Prefix
             backend:
-              serviceName: {{ $serviceName }}
-              servicePort: {{ $servicePort }}
+              service:
+                name: {{ $serviceName }}
+                port:
+                  number: {{ $servicePort }}
     {{- end }}
   {{- if .Values.kibana.ingress.tls }}
   tls: {{ toYaml .Values.kibana.ingress.tls | nindent 4 }}
