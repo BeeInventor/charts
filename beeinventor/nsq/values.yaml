@@ -107,6 +107,8 @@ nsqd:
 
   extraArgs: []
 
+  extraEnv: []
+
   podManagementPolicy: Parallel
 
   podAnnotations: {}
