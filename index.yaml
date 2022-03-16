@@ -1,11 +1,35 @@
 apiVersion: v1
 entries:
+  chirpstack:
+  - apiVersion: v2
+    appVersion: "3"
+    created: "2022-03-16T09:00:08.538369204Z"
+    description: ChirpStack open-source LoRaWAN® Network Server
+    digest: db1202e6737ea2cfaf7e80a71539bef85738208531bde5f4f1faf899f132a6e5
+    home: https://github.com/beeinventor/charts/tree/master/beeinventor/chirpstack
+    icon: https://www.chirpstack.io/static/logo.png
+    keywords:
+    - chirpstack
+    - lora
+    - lorawan
+    - network server
+    maintainers:
+    - email: benhu@beeinventor.com
+      name: BeeInventor
+    name: chirpstack
+    sources:
+    - https://github.com/beeinventor/charts/tree/master/beeinventor/chirpstack
+    - https://www.chirpstack.io/
+    type: application
+    urls:
+    - https://BeeInventor.github.io/charts/chirpstack-0.1.0.tgz
+    version: 0.1.0
   nsq:
   - apiVersion: v2
     appVersion: 1.2.1
-    created: "2021-12-24T01:49:58.797230669Z"
+    created: "2022-03-16T09:00:08.538851991Z"
     description: A realtime distributed messaging platform
-    digest: 7d633589040e9d92365c9db9bed3752ea902290da1502a6cef5acfce7c096307
+    digest: c32f27cb0ea550f01af8c86817888beb6332a0e75274a0e044d4474649d17c31
     home: https://github.com/beeinventor/charts/tree/master/beeinventor/nsq
     icon: https://nsq.io/static/img/nsq_blue.png
     keywords:
@@ -283,9 +307,9 @@ entries:
   opendistro-es:
   - apiVersion: v1
     appVersion: 1.13.3
-    created: "2021-12-24T01:49:58.799476399Z"
+    created: "2022-03-16T09:00:08.540151155Z"
     description: Open Distro for Elasticsearch
-    digest: 4a2425888f94bba519ed860677f029e4982578a363496a749efda69d9dcc2aa8
+    digest: 154507a8751fb44c36013540e12a1b75479900ca95236ea3e9e2b7ef5cfedd7d
     kubeVersion: ^1.10.0-0
     maintainers:
     - email: derek.heldt-werle@viasat.com
@@ -349,4 +373,4 @@ entries:
     urls:
     - https://BeeInventor.github.io/charts/opendistro-es-1.13.2.tgz
     version: 1.13.2
-generated: "2021-12-24T01:49:58.794987839Z"
+generated: "2022-03-16T09:00:08.535583561Z"
