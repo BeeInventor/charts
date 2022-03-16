@@ -23,3 +23,5 @@ jobs:
       run: helm lint ./beeinventor/nsq
     - name: Lint opendistro-es
       run: helm lint ./beeinventor/opendistro-es
+    - name: Lint chirpstack
+      run: helm lint ./beeinventor/chirpstack

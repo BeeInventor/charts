@@ -1,0 +1,69 @@
+{{- if .Values.applicationServer.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "chirpstack.name" . }}-application-server
+  labels:
+    app: chirpstack-application-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chirpstack-application-server
+  template:
+    metadata:
+      annotations:
+        checksum/configmap: {{ include (print $.Template.BasePath "/application-server/configmap.yaml") . | sha256sum }}
+      {{- with .Values.applicationServer.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        app: chirpstack-application-server
+    spec:
+      securityContext:
+        {{- toYaml .Values.applicationServer.podSecurityContext | nindent 8 }}
+      containers:
+      - name: {{ template "chirpstack.name" . }}-application-server
+        image: {{ .Values.applicationServer.image }}
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: config
+          mountPath: /etc/chirpstack-application-server
+        ports:
+        - name: ui
+          containerPort: 8080
+        - name: http
+          containerPort: 8001
+        - name: join
+          containerPort: 8003
+        - name: monitoring
+          containerPort: 8312
+        resources:
+          {{- toYaml .Values.applicationServer.resources | nindent 12 }}
+      initContainers:
+      - name: wait-postgres
+        image: busybox:1.31
+        imagePullPolicy: IfNotPresent
+        command: ['sh', '-c', 'until nslookup {{ .Values.applicationServer.redis.host }}; do echo waiting for postgres; sleep 2; done;']
+      - name: wait-redis
+        image: busybox:1.31
+        imagePullPolicy: IfNotPresent
+        command: ['sh', '-c', 'until nslookup {{ .Values.applicationServer.postgres.host }}; do echo waiting for redis; sleep 2; done;']
+      serviceAccountName: {{ .Values.applicationServer.serviceAccountName }}
+      {{- with .Values.applicationServer.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.applicationServer.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.applicationServer.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+      - name: config
+        configMap:
+          name:  {{ template "chirpstack.name" . }}-application-server-config
+{{- end }}

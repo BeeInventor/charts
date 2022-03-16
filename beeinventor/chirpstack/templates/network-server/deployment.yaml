@@ -1,0 +1,70 @@
+{{- if .Values.networkServer.enabled -}}
+{{ $region :=.Values.networkServer.band.name | lower }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "chirpstack.fullname" . }}-network-server-{{ template "chirpstack.region" . }}
+  labels:
+    app: chirpstack-network-server-{{ template "chirpstack.region" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chirpstack-network-server-{{ template "chirpstack.region" . }}
+  template:
+    metadata:
+      annotations:
+        checksum/configmap: {{ include (print $.Template.BasePath "/network-server/configmap.yaml") . | sha256sum }}
+      {{- with .Values.networkServer.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        app: chirpstack-network-server-{{ template "chirpstack.region" . }}
+    spec:
+      securityContext:
+        {{- toYaml .Values.networkServer.podSecurityContext | nindent 8 }}
+      containers:
+      - name: {{ template "chirpstack.fullname" . }}-network-server-{{ template "chirpstack.region" . }}
+        image: {{ .Values.networkServer.image }}
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: config
+          mountPath: /etc/chirpstack-network-server
+        ports:
+        - name: tcp
+          containerPort: 8000
+        - name: monitoring
+          containerPort: 8312
+        resources:
+          {{- toYaml .Values.networkServer.resources | nindent 12 }}
+      initContainers:
+      - name: wait-mqtt
+        image: busybox:1.31
+        imagePullPolicy: IfNotPresent
+        command: ['sh', '-c', 'until nslookup {{ template "chirpstack.name" . }}-mosquitto; do echo waiting for mqtt; sleep 2; done;']
+      - name: wait-postgres
+        image: busybox:1.31
+        imagePullPolicy: IfNotPresent
+        command: ['sh', '-c', 'until nslookup {{ .Values.networkServer.redis.host }}; do echo waiting for postgres; sleep 2; done;']
+      - name: wait-redis
+        image: busybox:1.31
+        imagePullPolicy: IfNotPresent
+        command: ['sh', '-c', 'until nslookup {{ .Values.networkServer.postgres.host }};do echo waiting for redis; sleep 2; done;']
+      serviceAccountName: {{ .Values.networkServer.serviceAccountName }}
+      {{- with .Values.networkServer.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.networkServer.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.networkServer.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+      - name: config
+        configMap:
+          name:  {{ template "chirpstack.fullname" . }}-network-server-{{ template "chirpstack.region" . }}-config
+{{- end }}

@@ -1,0 +1,18 @@
+{{- if .Values.gatewayBridge.enabled -}}
+{{ $region :=.Values.networkServer.band.name | lower }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "chirpstack.fullname" . }}-gateway-bridge-{{ template "chirpstack.region" . }}
+  labels:
+    app: chirpstack-gateway-bridge-{{ template "chirpstack.region" . }}
+spec:
+  type: NodePort
+  ports:
+  - name: udp
+    protocol: UDP
+    port: 1700
+    targetPort: 1700
+  selector:
+    app: chirpstack-gateway-bridge-{{ template "chirpstack.region" . }}
+{{- end }}

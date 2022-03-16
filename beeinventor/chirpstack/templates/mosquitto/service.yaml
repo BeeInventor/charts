@@ -1,0 +1,16 @@
+{{- if .Values.mosquitto.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "chirpstack.name" . }}-mosquitto
+  labels:
+    app: mosquitto
+spec:
+  ports:
+  - port: 1883
+    name: mqtt
+  type: NodePort
+  selector:
+    app: mosquitto
+{{- end }}
+
