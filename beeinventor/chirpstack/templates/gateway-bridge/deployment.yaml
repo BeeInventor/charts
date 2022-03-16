@@ -1,0 +1,60 @@
+{{- if .Values.gatewayBridge.enabled -}}
+{{ $region :=.Values.networkServer.band.name | lower }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "chirpstack.fullname" . }}-gateway-bridge-{{ template "chirpstack.region" . }}
+  labels:
+    app: chirpstack-gateway-bridge-{{ template "chirpstack.region" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chirpstack-gateway-bridge-{{ template "chirpstack.region" . }}
+  template:
+    metadata:
+      annotations:
+        checksum/configmap: {{ include (print $.Template.BasePath "/gateway-bridge/configmap.yaml") . | sha256sum }}
+      {{- with .Values.gatewayBridge.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        app: chirpstack-gateway-bridge-{{ template "chirpstack.region" . }}
+    spec:
+      securityContext:
+        {{- toYaml .Values.gatewayBridge.podSecurityContext | nindent 8 }}
+      containers:
+      - name: {{ template "chirpstack.fullname" . }}-gateway-bridge-{{ template "chirpstack.region" . }}
+        image: {{ .Values.gatewayBridge.image }}
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: config
+          mountPath: /etc/chirpstack-gateway-bridge
+        ports:
+        - name: udp
+          containerPort: 1700
+        resources:
+          {{- toYaml .Values.gatewayBridge.resources | nindent 12 }}
+      initContainers:
+      - name: wait-mqtt
+        image: busybox:1.31
+        imagePullPolicy: IfNotPresent
+        command: ['sh', '-c', 'until nslookup {{ template "chirpstack.fullname" . }}-mosquitto; do echo waiting for mqtt; sleep 2; done;']
+      serviceAccountName: {{ .Values.gatewayBridge.serviceAccountName }}
+      {{- with .Values.gatewayBridge.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.gatewayBridge.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.gatewayBridge.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+      - name: config
+        configMap:
+          name:  {{ template "chirpstack.fullname" . }}-gateway-bridge-{{ template "chirpstack.region" . }}-config
+{{- end }}

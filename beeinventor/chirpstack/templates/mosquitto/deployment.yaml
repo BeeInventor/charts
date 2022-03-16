@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "chirpstack.fullname" . }}-mosquitto
+  labels:
+    app: mosquitto
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mosquitto
+  template:
+    metadata:
+      annotations:
+      {{- with .Values.mosquitto.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        app: mosquitto
+    spec:
+      containers:
+      - name: {{ template "chirpstack.fullname" . }}-mosquitto
+        image: {{ .Values.mosquitto.image }}
+        ports:
+        - name: mqtt
+          containerPort: 1883
+        resources:
+          {{- toYaml .Values.mosquitto.resources | nindent 12 }}
+      serviceAccountName: {{ .Values.mosquitto.serviceAccountName }}
+      {{- with .Values.mosquitto.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.mosquitto.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.mosquitto.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

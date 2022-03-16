@@ -1,0 +1,25 @@
+{{- if .Values.applicationServer.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "chirpstack.fullname" . }}-application-server
+  labels:
+    app: chirpstack-application-server
+spec:
+  ports:
+  - name: ui
+    protocol: TCP
+    port: 8080
+  - name: http
+    protocol: TCP
+    port: 8001
+  - name: join
+    protocol: TCP
+    port: 8003
+  - name: monitoring
+    protocol: TCP
+    port: 8312
+  type: ClusterIP
+  selector:
+    app: chirpstack-application-server
+{{- end }}

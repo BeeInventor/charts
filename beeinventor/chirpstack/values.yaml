@@ -1,0 +1,193 @@
+# TODO: Support custom mqtt config.
+# mqtt:
+#   useBuiltinMosquitto: true
+#   server: tcp://localhost:1883
+#   username: ""
+#   password: ""
+#   clientId: ""
+#   cleanSession: true
+#   commandTopicTemplate: "gateway/{{ .GatewayID }}/command/{{ .CommandType }}"
+#   eventTopic: "gateway/+/event/+"
+#   maxReconnectInterval: "1m0s"
+#   qos: 0
+#   caCert: ""
+#   tlsCert: ""
+#   tlsKey: ""
+
+networkServer:
+  enabled: true
+  image: chirpstack/chirpstack-network-server:3.16.1
+  postgres:
+    host: "localhost"
+    port: 5432
+    username: ""
+    password: ""
+    database: ""
+    # Valid values for sslmode are:
+    # * disable - No SSL
+    # * require - Always SSL (skip verification)
+    # * verify-ca - Always SSL (verify that the certificate presented by the server was signed by a trusted CA)
+    # * verify-full - Always SSL (verify that the certification presented by the server was signed by a trusted CA and the server host name matches the one in the certificate)
+    sslMode: disable
+  redis:
+    host: "localhost"
+    port: 6379
+    password: ""
+    database: 0
+    tlsEnabled: false
+  netId: "000000"
+  band:
+    name: "AS923"
+    repeaterCompatible: false
+  # A unique identifier to distinguish the deployment.
+  # This can be used to separate deployment of the same band but different network settings.
+  variant: "A"
+  networkSettings:
+    rx1DrOffset: 0
+    rx2Dr: 5
+    rx2Frequency: -1
+    downlinkTxPower: -1
+    # - frequency: 867500000
+    #   min_dr: 0
+    #   max_dr: 5
+    extraChannels: []
+  podAnnotations: {}
+  resources: {}
+  serviceAccountName: ""
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  podSecurityContext: {}
+
+applicationServer:
+  enabled: true
+  image: chirpstack/chirpstack-application-server:3.17.6
+  postgres:
+    host: "localhost"
+    port: 5432
+    username: ""
+    password: ""
+    database: ""
+    # Valid values for sslmode are:
+    # * disable - No SSL
+    # * require - Always SSL (skip verification)
+    # * verify-ca - Always SSL (verify that the certificate presented by the server was signed by a trusted CA)
+    # * verify-full - Always SSL (verify that the certification presented by the server was signed by a trusted CA and the server host name matches the one in the certificate)
+    sslMode: disable
+  redis:
+    host: "localhost"
+    port: 6379
+    password: ""
+    database: 0
+    tlsEnabled: false
+  ingress:
+    enabled: false
+    host:
+    annotations: {}
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+  userAuthentication:
+    openIdConnect:
+      enabled: false
+      registrationEnabled: false
+      registrationCallbackURL: ""
+      providerURL: ""
+      clientId: ""
+      clientSecret: ""
+      redirectURL: ""
+      logoutUrl: ""
+      loginLabel: ""
+  integration:
+    # This defines how the MQTT payloads are encoded. Valid options are:
+    # * protobuf:  Protobuf encoding
+    # * json:      JSON encoding (easier for debugging, but less compact than 'protobuf')
+    # * json_v3:   v3 JSON (will be removed in the next major release)
+    marshaler: 'json_v3'
+    # Integrations that can be enabled are:
+    # * mqtt              - MQTT broker
+    # * amqp              - AMQP / RabbitMQ
+    # * aws_sns           - AWS Simple Notification Service (SNS)
+    # * azure_service_bus - Azure Service-Bus
+    # * gcp_pub_sub       - Google Cloud Pub/Sub
+    # * kafka             - Kafka distributed streaming platform
+    # * postgresql        - PostgreSQL database
+    enabled:
+      - mqtt
+    mqtt:
+      eventTopicTemplate: "application/{{ .ApplicationID }}/device/{{ .DevEUI }}/event/{{ .EventType }}"
+      commandTopicTemplate: "application/{{ .ApplicationID }}/device/{{ .DevEUI }}/command/{{ .CommandType }}"
+      retainEvent: false
+      server: "tcp://localhost:1883"
+      username: ""
+      password: ""
+      maxReconnectInterval: "1m0s"
+      qos: 0
+      cleanSession: true
+      clientId: ""
+      caCert: ""
+      tlsCert: ""
+      tlsKey: ""
+      client:
+        caCert: ""
+        caKey: ""
+        clientCertLifetime: ""
+    # TODO: Support all integration types.
+    # amqp: {}
+    # aws_sns: {}
+    # azure_service_bus: {}
+    # gcp_pub_sub: {}
+    # kafka: {}
+    # postgresql: {}
+  externalAPI:
+    tlsCert: ""
+    tlsKey: ""
+    jwtSecret: "topsecret"
+    corsAllowOrigin: ""
+  podAnnotations: {}
+  resources: {}
+  serviceAccountName: ""
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  podSecurityContext: {}
+
+gatewayBridge:
+  enabled: true
+  image: chirpstack/chirpstack-gateway-bridge:3.13.2
+  service:
+    nodePort: 31700
+  backend:
+    # Valid options are:
+    #   * semtech_udp
+    #   * concentratord
+    #   * basic_station
+    type: semtech_udp
+  integration:
+    # Valid options are:
+    #   * protobuf
+    #   * json
+    marshaler: protobuf
+  metrics:
+    endpointEnabled: false
+    bind: ""
+  podAnnotations: {}
+  resources: {}
+  serviceAccountName: ""
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  podSecurityContext: {}
+
+mosquitto:
+  image: eclipse-mosquitto:1.6.12
+  podAnnotations: {}
+  resources: {}
+  serviceAccountName: ""
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  podSecurityContext: {}
