@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ template "chirpstack.fullname" . }}-application-server
+  name: {{ template "chirpstack.name" . }}-application-server
   labels:
     app: chirpstack-application-server
 spec:
@@ -23,7 +23,7 @@ spec:
       securityContext:
         {{- toYaml .Values.applicationServer.podSecurityContext | nindent 8 }}
       containers:
-      - name: {{ template "chirpstack.fullname" . }}-application-server
+      - name: {{ template "chirpstack.name" . }}-application-server
         image: {{ .Values.applicationServer.image }}
         imagePullPolicy: IfNotPresent
         volumeMounts:
@@ -65,5 +65,5 @@ spec:
       volumes:
       - name: config
         configMap:
-          name:  {{ template "chirpstack.fullname" . }}-application-server-config
+          name:  {{ template "chirpstack.name" . }}-application-server-config
 {{- end }}

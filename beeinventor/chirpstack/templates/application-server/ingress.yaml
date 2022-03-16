@@ -9,7 +9,7 @@ apiVersion: networking.k8s.io/v1
 {{- end }}
 kind: Ingress
 metadata:
-  name: {{ template "chirpstack.fullname" . }}-application-server
+  name: {{ template "chirpstack.name" . }}-application-server
   labels:
     app: chirpstack-application-server
   {{- with .Values.applicationServer.ingress.annotations }}
@@ -33,14 +33,14 @@ spec:
       {{- if semverCompare "<1.19-0" .Capabilities.KubeVersion.GitVersion }}
       - path: /
         backend:
-          serviceName: {{ template "chirpstack.fullname" . }}-application-server
+          serviceName: {{ template "chirpstack.name" . }}-application-server
           servicePort: 8080
       {{- else }}
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: {{ template "chirpstack.fullname" . }}-application-server
+            name: {{ template "chirpstack.name" . }}-application-server
             port:
               number: 8080
       {{- end }}

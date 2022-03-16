@@ -4,7 +4,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ template "chirpstack.fullname" . }}-application-server-config
+  name: {{ template "chirpstack.name" . }}-application-server-config
   namespace: {{ .Release.Namespace }}
 data:
   chirpstack-application-server.toml: |
@@ -131,7 +131,7 @@ data:
     # are using the same Redis database and it is not possible to separate
     # keys by database index (e.g. when using Redis Cluster, which does not
     # support multiple databases).
-    key_prefix="as:{{ template "chirpstack.region" . }}"
+    key_prefix=""
 
 
     # Application-server settings.
@@ -472,7 +472,7 @@ data:
       # this to the host:ip on which ChirpStack Network Server can reach ChirpStack Application Server.
       # The port must be equal to the port configured by the 'bind' flag
       # above.
-      public_host="{{ template "chirpstack.fullname" . }}-application-server:8001"
+      public_host="{{ template "chirpstack.name" . }}-application-server:8001"
 
 
       # Settings for the "external api"

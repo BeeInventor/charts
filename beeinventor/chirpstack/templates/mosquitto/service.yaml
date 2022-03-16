@@ -1,7 +1,8 @@
+{{- if .Values.mosquitto.enabled -}}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "chirpstack.fullname" . }}-mosquitto
+  name: {{ template "chirpstack.name" . }}-mosquitto
   labels:
     app: mosquitto
 spec:
@@ -11,4 +12,5 @@ spec:
   type: NodePort
   selector:
     app: mosquitto
+{{- end }}
 

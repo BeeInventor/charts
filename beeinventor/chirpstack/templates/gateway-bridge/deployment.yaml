@@ -39,7 +39,7 @@ spec:
       - name: wait-mqtt
         image: busybox:1.31
         imagePullPolicy: IfNotPresent
-        command: ['sh', '-c', 'until nslookup {{ template "chirpstack.fullname" . }}-mosquitto; do echo waiting for mqtt; sleep 2; done;']
+        command: ['sh', '-c', 'until nslookup {{ template "chirpstack.name" . }}-mosquitto; do echo waiting for mqtt; sleep 2; done;']
       serviceAccountName: {{ .Values.gatewayBridge.serviceAccountName }}
       {{- with .Values.gatewayBridge.nodeSelector }}
       nodeSelector:

@@ -200,17 +200,20 @@ data:
       # MQTT integration configuration.
       [integration.mqtt]
       # Event topic template.
-      event_topic_template="{{ template "chirpstack.region" . }}/gateway/{{`{{ .GatewayID }}`}}/event/{{`{{ .EventType }}`}}"
+      {{ $eventTopicTemplate := (printf "%s/gateway/{{ .GatewayID }}/event/{{ .EventType }}" (include "chirpstack.region" .)) }}
+      event_topic_template={{ default $eventTopicTemplate .Values.gatewayBridge.eventTopicTemplate | quote}}
       # State topic template.
       #
       # States are sent by the gateway as retained MQTT messages (by default)
       # so that the last message will be stored by the MQTT broker. When set to
       # a blank string, this feature will be disabled. This feature is only
       # supported when using the generic authentication type.
-      state_topic_template="{{ template "chirpstack.region" . }}/gateway/{{`{{ .GatewayID }}`}}/state/{{`{{ .StateType }}`}}"
+      {{ $stateTopicTemplate := (printf "%s/gateway/{{ .GatewayID }}/state/{{ .StateType }}" (include "chirpstack.region" .)) }}
+      state_topic_template={{ default $stateTopicTemplate .Values.gatewayBridge.stateTopicTemplate | quote }}
 
       # Command topic template.
-      command_topic_template="{{ template "chirpstack.region" . }}/gateway/{{`{{ .GatewayID }}`}}/command/#"
+      {{ $commandTopicTemplate := (printf "%s/gateway/{{ .GatewayID }}/command/#" (include "chirpstack.region" .)) }}
+      command_topic_template={{ default $commandTopicTemplate .Values.gatewayBridge.commandTopicTemplate | quote }}
 
       # State retained.
       #
@@ -250,14 +253,14 @@ data:
         # Configure one or multiple MQTT server to connect to. Each item must be in
         # the following format: scheme://host:port where scheme is tcp, ssl or ws.
         servers=[
-          "tcp://{{ template "chirpstack.fullname" . }}-mosquitto:1883"
+          {{ default (include "chirpstack.mosquitto" .) .Values.mqtt.server | quote }}
         ]
 
         # Connect with the given username (optional)
-        username=""
+        username={{ .Values.mqtt.username | quote }}
 
         # Connect with the given password (optional)
-        password=""
+        password={{ .Values.mqtt.password | quote }}
 
         # Quality of service level
         #
@@ -267,34 +270,34 @@ data:
         #
         # Note: an increase of this value will decrease the performance.
         # For more information: https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels
-        qos=0
+        qos={{ .Values.mqtt.qos }}
 
         # Clean session
         #
         # Set the "clean session" flag in the connect message when this client
         # connects to an MQTT broker. By setting this flag you are indicating
         # that no messages saved by the broker for this client should be delivered.
-        clean_session=true
+        clean_session={{ .Values.mqtt.cleanSession }}
 
         # Client ID
         #
         # Set the client id to be used by this client when connecting to the MQTT
         # broker. A client id must be no longer than 23 characters. When left blank,
         # a random id will be generated. This requires clean_session=true.
-        client_id=""
+        client_id={{ .Values.mqtt.clientId | quote }}
 
         # CA certificate file (optional)
         #
         # Use this when setting up a secure connection (when server uses ssl://...)
         # but the certificate used by the server is not trusted by any CA certificate
         # on the server (e.g. when self generated).
-        ca_cert=""
+        ca_cert={{ .Values.mqtt.caCert | quote }}
 
         # mqtt TLS certificate file (optional)
-        tls_cert=""
+        tls_cert={{ .Values.mqtt.tlsCert | quote }}
 
         # mqtt TLS key file (optional)
-        tls_key=""
+        tls_key={{ .Values.mqtt.tlsKey | quote }}
 
 
         # Google Cloud Platform Cloud IoT Core authentication.

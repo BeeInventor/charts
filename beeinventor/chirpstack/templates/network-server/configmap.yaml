@@ -1,6 +1,4 @@
 {{- if .Values.networkServer.enabled -}}
-{{ $pgUrl := (printf "%s:%d" .Values.networkServer.postgres.host (int64 .Values.networkServer.postgres.port) ) }}
-{{ $pgCredentials := (printf "%s:%s" .Values.networkServer.postgres.username  .Values.networkServer.postgres.password) }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -55,6 +53,8 @@ data:
     # * require - Always SSL (skip verification)
     # * verify-ca - Always SSL (verify that the certificate presented by the server was signed by a trusted CA)
     # * verify-full - Always SSL (verify that the certification presented by the server was signed by a trusted CA and the server host name matches the one in the certificate)
+    {{ $pgUrl := (printf "%s:%d" .Values.networkServer.postgres.host (int64 .Values.networkServer.postgres.port) ) }}
+    {{ $pgCredentials := (printf "%s:%s" .Values.networkServer.postgres.username  .Values.networkServer.postgres.password) }}
     dsn={{ (printf "postgresql://%s@%s/%s?sslmode=%s" $pgCredentials $pgUrl .Values.networkServer.postgres.database .Values.networkServer.postgres.sslMode) | quote }}
 
     # Automatically apply database migrations.
@@ -573,27 +573,29 @@ data:
         # absolutely needed.
 
         # Event topic template.
-        event_topic="{{ template "chirpstack.region" . }}/gateway/+/event/+"
+        {{ $eventTopic := (printf "%s/gateway/+/event/+" (include "chirpstack.region" .)) }}
+        event_topic={{ default $eventTopic .Values.networkServer.eventTopic | quote }}
 
         # Command topic template.
         #
         # Use:
         #   * "{{ .GatewayID }}" as an substitution for the LoRa gateway ID
         #   * "{{ .CommandType }}" as an substitution for the command type
-        command_topic_template="{{ template "chirpstack.region" . }}/gateway/{{`{{ .GatewayID }}`}}/command/{{`{{ .CommandType }}`}}"
+        {{ $commandTopic := (printf "%s/gateway/{{ .GatewayID }}/command/{{ .CommandType }}" (include "chirpstack.region" .)) }}
+        command_topic_template={{ default $commandTopic .Values.networkServer.commandTopic | quote }}
 
         # MQTT server (e.g. scheme://host:port where scheme is tcp, ssl or ws)
-        server="tcp://{{ template "chirpstack.fullname" . }}-mosquitto:1883"
+        server={{ default (include "chirpstack.mosquitto" .) .Values.mqtt.server | quote }}
 
         # Connect with the given username (optional)
-        username=""
+        username={{ .Values.mqtt.username | quote }}
 
         # Connect with the given password (optional)
-        password=""
+        password={{ .Values.mqtt.password | quote }}
 
         # Maximum interval that will be waited between reconnection attempts when connection is lost.
         # Valid units are 'ms', 's', 'm', 'h'. Note that these values can be combined, e.g. '24h30m15s'.
-        max_reconnect_interval="1m0s"
+        max_reconnect_interval={{ .Values.mqtt.maxReconnectInterval | quote }}
 
         # Quality of service level
         #
@@ -603,34 +605,34 @@ data:
         #
         # Note: an increase of this value will decrease the performance.
         # For more information: https://www.hivemq.com/blog/mqtt-essentials-part-6-mqtt-quality-of-service-levels
-        qos=0
+        qos={{ .Values.mqtt.qos }}
 
         # Clean session
         #
         # Set the "clean session" flag in the connect message when this client
         # connects to an MQTT broker. By setting this flag you are indicating
         # that no messages saved by the broker for this client should be delivered.
-        clean_session=true
+        clean_session={{ .Values.mqtt.cleanSession }}
 
         # Client ID
         #
         # Set the client id to be used by this client when connecting to the MQTT
         # broker. A client id must be no longer than 23 characters. When left blank,
         # a random id will be generated. This requires clean_session=true.
-        client_id=""
+        client_id={{ .Values.mqtt.clientId | quote }}
 
         # CA certificate file (optional)
         #
         # Use this when setting up a secure connection (when server uses ssl://...)
         # but the certificate used by the server is not trusted by any CA certificate
         # on the server (e.g. when self generated).
-        ca_cert=""
+        ca_cert={{ .Values.mqtt.caCert | quote }}
 
         # TLS certificate file (optional)
-        tls_cert=""
+        tls_cert={{ .Values.mqtt.tlsCert | quote }}
 
         # TLS key file (optional)
-        tls_key=""
+        tls_key={{ .Values.mqtt.tlsKey | quote }}
 
 
         # AMQP / RabbitMQ.
@@ -843,7 +845,7 @@ data:
       # Default server endpoint.
       #
       # This API is provided by ChirpStack Application Server.
-      server="http://{{ template "chirpstack.fullname" . }}-application-server:8003"
+      server="http://{{ template "chirpstack.name" . }}-application-server:8003"
 
       # # Use the async API scheme.
       async=false

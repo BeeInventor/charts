@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "chirpstack.fullname" . }}-application-server
+  name: {{ template "chirpstack.name" . }}-application-server
   labels:
     app: chirpstack-application-server
 spec:
