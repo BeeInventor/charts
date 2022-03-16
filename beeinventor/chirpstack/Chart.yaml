@@ -1,25 +1,19 @@
 apiVersion: v2
 name: chirpstack
-description: A Helm chart for Kubernetes
-
-#Add release name for pod and config
-
-# A chart can be either an 'application' or a 'library' chart.
-#
-# Application charts are a collection of templates that can be packaged into versioned archives
-# to be deployed.
-#
-# Library charts provide useful utilities or functions for the chart developer. They're included as
-# a dependency of application charts to inject those utilities and functions into the rendering
-# pipeline. Library charts do not define any templates and therefore cannot be deployed.
+description: ChirpStack open-source LoRaWAN® Network Server
 type: application
-
-# This is the chart version. This version number should be incremented each time you make changes
-# to the chart and its templates, including the app version.
-# Versions are expected to follow Semantic Versioning (https://semver.org/)
-version: 0.6.0
-
-# This is the version number of the application being deployed. This version number should be
-# incremented each time you make changes to the application. Versions are not expected to
-# follow Semantic Versioning. They should reflect the version the application is using.
-appVersion: 3.0.0
+version: 0.1.0
+appVersion: "3"
+home: https://github.com/beeinventor/charts/tree/master/beeinventor/chirpstack
+icon: https://www.chirpstack.io/static/logo.png
+keywords:
+- chirpstack
+- lora
+- lorawan
+- network server
+maintainers:
+- email: benhu@beeinventor.com
+  name: BeeInventor
+sources:
+- https://github.com/beeinventor/charts/tree/master/beeinventor/chirpstack
+- https://www.chirpstack.io/
