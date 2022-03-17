@@ -48,3 +48,7 @@ As for the default mqtt topic templates, the `${region}-${variant}` in lowercase
 As each server has its own key prefix, it is fine to share a redis server among several network servers.
 
 For example, if the `networkServer.band.name` is set to `AS923` and the `networkServer.variant` is set to `A`, the network server redis key prefix will be `ns:as923-a`.
+
+## Mosquitto
+
+It is highly recommended that you deploy your own MQTT server since Mosquitto is aimed toward getting started quickly.
