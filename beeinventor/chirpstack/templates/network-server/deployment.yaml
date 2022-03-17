@@ -41,15 +41,15 @@ spec:
       - name: wait-mqtt
         image: busybox:1.31
         imagePullPolicy: IfNotPresent
-        command: ['sh', '-c', 'until nslookup {{ template "chirpstack.name" . }}-mosquitto; do echo waiting for mqtt; sleep 2; done;']
+        command: ['sh', '-c', 'until echo {{ include "chirpstack.mqtt" . }} | sed -e "s/^.*\/\///" | sed "s/:/ /" | xargs nc -v -w 3; do echo waiting for mqtt; sleep 2; done;']
       - name: wait-postgres
         image: busybox:1.31
         imagePullPolicy: IfNotPresent
-        command: ['sh', '-c', 'until nslookup {{ .Values.networkServer.redis.host }}; do echo waiting for postgres; sleep 2; done;']
+        command: ['sh', '-c', 'until nc -v -w 3 {{ .Values.networkServer.postgres.host }} {{ .Values.networkServer.postgres.port }}; do echo waiting for postgres; sleep 2; done;']
       - name: wait-redis
         image: busybox:1.31
         imagePullPolicy: IfNotPresent
-        command: ['sh', '-c', 'until nslookup {{ .Values.networkServer.postgres.host }};do echo waiting for redis; sleep 2; done;']
+        command: ['sh', '-c', 'until nc -v -w 3 {{ .Values.networkServer.redis.host }} {{ .Values.networkServer.redis.port }}; do echo waiting for redis; sleep 2; done;']
       serviceAccountName: {{ .Values.networkServer.serviceAccountName }}
       {{- with .Values.networkServer.nodeSelector }}
       nodeSelector:

@@ -30,3 +30,8 @@ If release name contains chart name it will be used as a full name.
 {{- define "chirpstack.mosquitto" -}}
 {{- (printf "tcp://%s-mosquitto:1883" (include "chirpstack.name" .)) -}}
 {{- end -}}
+
+{{- define "chirpstack.mqtt" -}}
+{{- default (include "chirpstack.mosquitto" .) .Values.mqtt.server | quote  -}}
+{{- end -}}
+

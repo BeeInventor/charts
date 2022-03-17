@@ -585,7 +585,7 @@ data:
         command_topic_template={{ default $commandTopic .Values.networkServer.commandTopic | quote }}
 
         # MQTT server (e.g. scheme://host:port where scheme is tcp, ssl or ws)
-        server={{ default (include "chirpstack.mosquitto" .) .Values.mqtt.server | quote }}
+        server={{ include "chirpstack.mqtt" . }}
 
         # Connect with the given username (optional)
         username={{ .Values.mqtt.username | quote }}
