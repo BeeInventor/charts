@@ -3,6 +3,29 @@ entries:
   chirpstack:
   - apiVersion: v2
     appVersion: "3"
+    created: "2022-03-17T02:31:19.074204442Z"
+    description: ChirpStack open-source LoRaWAN® Network Server
+    digest: 6b11ffa16c164c11cf2e377740c46e7082c387fb888e59f62c49faa41d0ee676
+    home: https://github.com/beeinventor/charts/tree/master/beeinventor/chirpstack
+    icon: https://www.chirpstack.io/static/logo.png
+    keywords:
+    - chirpstack
+    - lora
+    - lorawan
+    - network server
+    maintainers:
+    - email: benhu@beeinventor.com
+      name: BeeInventor
+    name: chirpstack
+    sources:
+    - https://github.com/beeinventor/charts/tree/master/beeinventor/chirpstack
+    - https://www.chirpstack.io/
+    type: application
+    urls:
+    - https://BeeInventor.github.io/charts/chirpstack-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: "3"
     created: "2022-03-17T02:04:03.143329916Z"
     description: ChirpStack open-source LoRaWAN® Network Server
     digest: e8f00723bad1dd797f712b625dbe3376c066f4f5e2a8a666583f60aaff164137
@@ -50,9 +73,9 @@ entries:
   nsq:
   - apiVersion: v2
     appVersion: 1.2.1
-    created: "2022-03-17T02:04:03.143812602Z"
+    created: "2022-03-17T02:31:19.074742785Z"
     description: A realtime distributed messaging platform
-    digest: 4df8dc0802dddddc0d5de89f42ff5dcf2f98354796d09b2a1e2f6e27c0846f4d
+    digest: d4920c5f11841c13df27e02b34db03b756ff275a1fd2d6407cdd4ceecde31b87
     home: https://github.com/beeinventor/charts/tree/master/beeinventor/nsq
     icon: https://nsq.io/static/img/nsq_blue.png
     keywords:
@@ -330,9 +353,9 @@ entries:
   opendistro-es:
   - apiVersion: v1
     appVersion: 1.13.3
-    created: "2022-03-17T02:04:03.14510209Z"
+    created: "2022-03-17T02:31:19.07602332Z"
     description: Open Distro for Elasticsearch
-    digest: eac421b8d04ae16e11af613b1a69f0cbb6d42cad4332ce976c1706d8165af7cf
+    digest: b6e94413ba745ba3df24d2c13aa0d5125a7fcac63aaf5d596d4b733bf568cd07
     kubeVersion: ^1.10.0-0
     maintainers:
     - email: derek.heldt-werle@viasat.com
@@ -396,4 +419,4 @@ entries:
     urls:
     - https://BeeInventor.github.io/charts/opendistro-es-1.13.2.tgz
     version: 1.13.2
-generated: "2022-03-17T02:04:03.140521978Z"
+generated: "2022-03-17T02:31:19.071434042Z"
