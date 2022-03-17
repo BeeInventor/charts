@@ -1,4 +1,4 @@
-{{- if .Values.mosquitto.enabled -}}
+{{- if not .Values.mqtt.server -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:

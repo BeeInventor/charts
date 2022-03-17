@@ -175,7 +175,7 @@ gatewayBridge:
   podSecurityContext: {}
 
 # MQTT for the network server and gateway bridge.
-# If the mqtt.server is omitted, the mosquitto must be enabled.
+# If the mqtt.server is omitted, the mosquitto will be used.
 mqtt:
   server: ""
   username: ""
@@ -190,8 +190,9 @@ mqtt:
 
 # Mosquitto server values.
 mosquitto:
-  enabled: true
   image: eclipse-mosquitto:1.6.12
+  service:
+    nodePort: 31883
   podAnnotations: {}
   resources: {}
   serviceAccountName: ""
