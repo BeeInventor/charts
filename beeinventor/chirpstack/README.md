@@ -1,7 +1,5 @@
 # ChirpStack
 
-> This chart is still under development
-
 ChirpStack open-source LoRaWAN® Network Server
 
 ## TL;DR
