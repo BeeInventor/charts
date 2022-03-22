@@ -36,6 +36,9 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: status.podIP
+        {{- if .Values.nsqd.extraEnv }}
+        {{- toYaml .Values.nsqd.extraEnv | nindent 8 }}
+        {{- end }}
         command:
         - /nsqd
         args:
