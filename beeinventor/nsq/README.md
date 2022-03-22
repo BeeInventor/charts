@@ -74,6 +74,7 @@ The following table lists the configurable parameters of the nsq chart and their
 | nsqd.replicaCount       | Number of nsqd replicas                                                              | `3`                  |
 | nsqd.priorityClassName  | The name of the kube priority class used. Defaults to global default.                | `nil`                |
 | nsqd.extraArgs          | Extra arguments to provide to the `nsqd` command                                     | `[]`                 |
+| nsqd.extraEnv           | Extra env to provide to the `nsqd`                                                   | `[]`                 |
 | nsqd.service.type       | The nsqd service type                                                                | `ClusterIP`          |
 | nsqd.podAnnotations     | The annotations to attach to the nsqd pods                                           | `{}`                 |
 | nsqd.podSecurityContext | The security context to attach to the nsqd pods                                      | `{}`                 |
