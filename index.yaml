@@ -3,9 +3,9 @@ entries:
   chirpstack:
   - apiVersion: v2
     appVersion: "3"
-    created: "2022-03-22T08:15:14.440773694Z"
+    created: "2022-03-30T10:06:13.326004856Z"
     description: ChirpStack open-source LoRaWAN® Network Server
-    digest: 339b2584884094df7dbcabc7d7269075437f5803ca21bd68419c021fac95ca28
+    digest: 665ff90fefb99e14ea6c2597763f155c1405a6536fd685934b12dfe96dadbe75
     home: https://github.com/beeinventor/charts/tree/master/beeinventor/chirpstack
     icon: https://www.chirpstack.io/static/logo.png
     keywords:
@@ -71,6 +71,29 @@ entries:
     - https://BeeInventor.github.io/charts/chirpstack-0.1.0.tgz
     version: 0.1.0
   nsq:
+  - apiVersion: v2
+    appVersion: 1.2.1
+    created: "2022-03-30T10:06:13.326801761Z"
+    description: A realtime distributed messaging platform
+    digest: c8318f6289bea628925f37a9dbc9e4b0fe524bd93c1c4304574cc74c732f59a5
+    home: https://github.com/beeinventor/charts/tree/master/beeinventor/nsq
+    icon: https://nsq.io/static/img/nsq_blue.png
+    keywords:
+    - nsq
+    - nsqd
+    - nsqlookupd
+    - nsqadmin
+    maintainers:
+    - email: benhu@beeinventor.com
+      name: BeeInventor
+    name: nsq
+    sources:
+    - https://github.com/beeinventor/charts/tree/master/beeinventor/nsq
+    - https://nsq.io/
+    type: application
+    urls:
+    - https://BeeInventor.github.io/charts/nsq-1.2.2.tgz
+    version: 1.2.2
   - apiVersion: v2
     appVersion: 1.2.1
     created: "2022-03-22T08:15:14.44132251Z"
@@ -376,9 +399,9 @@ entries:
   opendistro-es:
   - apiVersion: v1
     appVersion: 1.13.3
-    created: "2022-03-22T08:15:14.442788722Z"
+    created: "2022-03-30T10:06:13.328912875Z"
     description: Open Distro for Elasticsearch
-    digest: 6279b237202ee809b396b459f4690c5b08c61756f8675e7d6ac882de63e21a0d
+    digest: 8ee20348251ce4c44568ae1cb4e46d25b42652ee4736d027bed4f6b928276cac
     kubeVersion: ^1.10.0-0
     maintainers:
     - email: derek.heldt-werle@viasat.com
@@ -442,4 +465,4 @@ entries:
     urls:
     - https://BeeInventor.github.io/charts/opendistro-es-1.13.2.tgz
     version: 1.13.2
-generated: "2022-03-22T08:15:14.437724966Z"
+generated: "2022-03-30T10:06:13.322500434Z"
