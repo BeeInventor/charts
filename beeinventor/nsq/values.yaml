@@ -141,5 +141,5 @@ nsqd:
     enabled: true
     size: 1Gi
     storageClass: "-"
-    accessModes:
-      - ReadWriteOnce
+    accessModes: ReadWriteOnce
+
