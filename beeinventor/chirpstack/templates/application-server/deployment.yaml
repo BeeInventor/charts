@@ -44,11 +44,11 @@ spec:
       - name: wait-postgres
         image: busybox:1.31
         imagePullPolicy: IfNotPresent
-        command: ['sh', '-c', 'until nc -v -w 3 {{ .Values.networkServer.postgres.host }} {{ .Values.networkServer.postgres.port }}; do echo waiting for postgres; sleep 2; done;']
+        command: ['sh', '-c', 'until nc -v -w 3 {{ .Values.applicationServer.postgres.host }} {{ .Values.applicationServer.postgres.port }}; do echo waiting for postgres; sleep 2; done;']
       - name: wait-redis
         image: busybox:1.31
         imagePullPolicy: IfNotPresent
-        command: ['sh', '-c', 'until nc -v -w 3 {{ .Values.networkServer.redis.host }} {{ .Values.networkServer.redis.port }}; do echo waiting for redis; sleep 2; done;']
+        command: ['sh', '-c', 'until nc -v -w 3 {{ .Values.applicationServer.redis.host }} {{ .Values.applicationServer.redis.port }}; do echo waiting for redis; sleep 2; done;']
       serviceAccountName: {{ .Values.applicationServer.serviceAccountName }}
       {{- with .Values.applicationServer.nodeSelector }}
       nodeSelector:
