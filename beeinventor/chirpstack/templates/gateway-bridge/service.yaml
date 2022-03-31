@@ -11,7 +11,8 @@ metadata:
   labels:
     app: chirpstack-gateway-bridge-{{ template "chirpstack.region" . }}
 spec:
-  type: NodePort
+  externalTrafficPolicy: Local
+  type: {{ .Values.gatewayBridge.service.type }}
   ports:
   - name: udp
     protocol: UDP

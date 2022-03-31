@@ -157,6 +157,7 @@ gatewayBridge:
   image: chirpstack/chirpstack-gateway-bridge:3.13.2
   service:
     annotations: {}
+    type: NodePort
     nodePort: 31700
   backend:
     # Valid options are:
