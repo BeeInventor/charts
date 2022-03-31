@@ -72,13 +72,13 @@ data:
     #
     # This sets the max. number of open connections that are allowed in the
     # PostgreSQL connection pool (0 = unlimited).
-    max_open_connections={{ .Values.networkServer.postgres.maxOpenConnections }}
+    max_open_connections={{ .Values.applicationServer.postgres.maxOpenConnections }}
 
     # Max idle connections.
     #
     # This sets the max. number of idle connections in the PostgreSQL connection
     # pool (0 = no idle connections are retained).
-    max_idle_connections={{ .Values.networkServer.postgres.maxIdleConnections }}
+    max_idle_connections={{ .Values.applicationServer.postgres.maxIdleConnections }}
 
 
     # Redis settings
