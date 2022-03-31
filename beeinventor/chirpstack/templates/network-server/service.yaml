@@ -4,6 +4,10 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ template "chirpstack.fullname" . }}-network-server-{{ template "chirpstack.region" . }}
+  {{- with .Values.networkServer.service.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   labels:
     app: chirpstack-network-server-{{ template "chirpstack.region" . }}
 spec:

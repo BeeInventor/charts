@@ -20,6 +20,8 @@ applicationServer:
     password: ""
     database: 0
     tlsEnabled: false
+  service:
+    annotations: {}
   ingress:
     enabled: false
     host:
@@ -99,6 +101,8 @@ applicationServer:
 networkServer:
   enabled: true
   image: chirpstack/chirpstack-network-server:3.16.1
+  service:
+    annotations: {}
   postgres:
     host: "localhost"
     port: 5432
@@ -148,6 +152,7 @@ gatewayBridge:
   enabled: true
   image: chirpstack/chirpstack-gateway-bridge:3.13.2
   service:
+    annotations: {}
     nodePort: 31700
   backend:
     # Valid options are:
