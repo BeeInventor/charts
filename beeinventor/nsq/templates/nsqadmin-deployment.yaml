@@ -52,17 +52,17 @@ spec:
             path: /
             port: http
         resources:
-          {{- toYaml .Values.resources | nindent 12 }}
+          {{- toYaml .Values.nsqadmin.resources | nindent 12 }}
       serviceAccountName: {{ .Values.nsqlookupd.serviceAccountName }}
-      {{- with .Values.nodeSelector }}
+      {{- with .Values.nsqadmin.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.affinity }}
+      {{- with .Values.nsqadmin.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.tolerations }}
+      {{- with .Values.nsqadmin.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
