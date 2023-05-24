@@ -3,9 +3,9 @@ entries:
   chirpstack:
   - apiVersion: v2
     appVersion: "3"
-    created: "2023-05-23T09:31:18.432657676Z"
+    created: "2023-05-24T02:31:52.892827146Z"
     description: ChirpStack open-source LoRaWAN® Network Server
-    digest: e157ef133b5f8693900126433ae6f9c9822c7f30f8b6c3c7441c1119a424cbe3
+    digest: d1b027b86aed12647f798df02adb7da5da73aa579f2132a103e388e4680bf653
     home: https://github.com/beeinventor/charts/tree/master/beeinventor/chirpstack
     icon: https://www.chirpstack.io/static/logo.png
     keywords:
@@ -200,6 +200,29 @@ entries:
     - https://BeeInventor.github.io/charts/livekit-server-1.0.0.tgz
     version: 1.0.0
   nsq:
+  - apiVersion: v2
+    appVersion: 1.2.1
+    created: "2023-05-24T02:31:52.893914658Z"
+    description: A realtime distributed messaging platform
+    digest: db21b00909281dae6a6b1b8447c748a330d5a2337641a4bd780c2dd21b8678cc
+    home: https://github.com/beeinventor/charts/tree/master/beeinventor/nsq
+    icon: https://nsq.io/static/img/nsq_blue.png
+    keywords:
+    - nsq
+    - nsqd
+    - nsqlookupd
+    - nsqadmin
+    maintainers:
+    - email: benhu@beeinventor.com
+      name: BeeInventor
+    name: nsq
+    sources:
+    - https://github.com/beeinventor/charts/tree/master/beeinventor/nsq
+    - https://nsq.io/
+    type: application
+    urls:
+    - https://BeeInventor.github.io/charts/nsq-1.2.3.tgz
+    version: 1.2.3
   - apiVersion: v2
     appVersion: 1.2.1
     created: "2023-05-23T09:31:18.433508442Z"
@@ -528,9 +551,9 @@ entries:
   opendistro-es:
   - apiVersion: v1
     appVersion: 1.13.3
-    created: "2023-05-23T09:31:18.435567303Z"
+    created: "2023-05-24T02:31:52.89701029Z"
     description: Open Distro for Elasticsearch
-    digest: 5ae4415abe1218156e960d98adaacf0931af77a1e89c693294ddb625f59daec3
+    digest: e5680e3b2cf4fb90144fa85d84f438b601d0c26999653f02e22e8a8f8ee8ebf8
     kubeVersion: ^1.10.0-0
     maintainers:
     - email: derek.heldt-werle@viasat.com
@@ -594,4 +617,4 @@ entries:
     urls:
     - https://BeeInventor.github.io/charts/opendistro-es-1.13.2.tgz
     version: 1.13.2
-generated: "2023-05-23T09:31:18.427679587Z"
+generated: "2023-05-24T02:31:52.890410422Z"
