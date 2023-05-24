@@ -20,6 +20,7 @@ helm repo add beeinventor https://beeinventor.github.io/charts
 
 - [ChirpStack](https://github.com/BeeInventor/charts/tree/main/beeinventor/chirpstack)
 - [NSQ](https://github.com/BeeInventor/charts/tree/main/beeinventor/nsq)
+  - There's also offcial charts maintained by nsqio: https://github.com/nsqio/helm-chart
 - [Open Distro](https://github.com/BeeInventor/charts/tree/main/beeinventor/opendistro-es)
 
 ## Contributing

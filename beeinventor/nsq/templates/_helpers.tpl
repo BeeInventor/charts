@@ -76,3 +76,14 @@ nsqd selector labels
 {{- define "nsq.nsqd.selectorLabels" -}}
 app.kubernetes.io/component: nsqd
 {{- end }}
+
+{{/*
+serviceMonitor namesapce
+*/}}
+{{- define "nsq.serviceMonitor.namespace" -}}
+    {{- if .Values.metrics.serviceMonitor.namespace -}}
+        {{- print .Values.metrics.serviceMonitor.namespace -}}
+    {{- else -}}
+        {{- print .Release.Namespace -}}
+    {{- end }}
+{{- end -}}
