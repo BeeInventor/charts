@@ -248,7 +248,7 @@ data:
       # 0=1sec, 1=1sec, ... 15=15sec. A higher value means ChirpStack Network Server has more
       # time to respond to the device as the delay between the uplink and the
       # first receive-window will be increased.
-      rx1_delay=1
+      rx1_delay={{ .Values.networkServer.networkSettings.rx1Delay }}
 
       # RX1 data-rate offset
       #

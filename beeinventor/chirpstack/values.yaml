@@ -133,6 +133,7 @@ networkServer:
   # This can be used to separate deployment of the same band but different network settings.
   variant: "A"
   networkSettings:
+    rx1Delay: 1
     rx1DrOffset: 0
     rx2Dr: 5
     rx2Frequency: -1
