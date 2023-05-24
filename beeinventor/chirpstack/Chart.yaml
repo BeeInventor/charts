@@ -2,7 +2,7 @@ apiVersion: v2
 name: chirpstack
 description: ChirpStack open-source LoRaWAN® Network Server
 type: application
-version: 0.1.7
+version: 0.1.8
 appVersion: "3"
 home: https://github.com/beeinventor/charts/tree/master/beeinventor/chirpstack
 icon: https://www.chirpstack.io/static/logo.png
