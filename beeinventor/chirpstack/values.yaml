@@ -126,6 +126,7 @@ networkServer:
     database: 0
     tlsEnabled: false
   netId: "000000"
+  getDownlinkDataDelay: "100ms"
   band:
     name: "AS923"
     repeaterCompatible: false

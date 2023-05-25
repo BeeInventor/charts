@@ -164,7 +164,7 @@ data:
     # Please note that this value has influence on the uplink / downlink
     # roundtrip time. Setting this value too high means ChirpStack Network Server will be
     # unable to respond to the device within its receive-window.
-    get_downlink_data_delay="100ms"
+    get_downlink_data_delay={{ .Values.networkServer.getDownlinkDataDelay | quote }}
 
 
       # LoRaWAN regional band configuration.
