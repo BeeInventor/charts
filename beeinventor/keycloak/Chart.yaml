@@ -1,0 +1,24 @@
+annotations:
+  category: DeveloperTools
+apiVersion: v2
+appVersion: 14.0.0
+dependencies:
+- name: common
+  repository: https://charts.bitnami.com/bitnami
+  tags:
+  - bitnami-common
+  version: 2.x.x
+description: Fork from bitnami keycloak 4.0.3, just for patching bitnami-common
+home: https://www.keycloak.org
+icon: https://bitnami.com/assets/stacks/keycloak/img/keycloak-stack-220x234.png
+keywords:
+- keycloak
+- access-management
+maintainers:
+- email: ikechang@beeinventor.com
+  name: BeeInventor
+name: keycloak
+sources:
+- https://github.com/beeinventor/charts/keycloak
+- https://github.com/keycloak/keycloak
+version: 4.0.4
