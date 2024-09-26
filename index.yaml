@@ -3,9 +3,9 @@ entries:
   chirpstack:
   - apiVersion: v2
     appVersion: "3"
-    created: "2023-05-25T03:11:11.57122728Z"
+    created: "2024-09-26T04:33:13.277125811Z"
     description: ChirpStack open-source LoRaWAN® Network Server
-    digest: 5ecfcb6c8df3be9763ed40cb6b1a3c83add1a124812f1de2e9f698daf4d42b00
+    digest: c2f1177d8a7183a2257e55feefdd72e400f2269babc11bdda514c93e91c1479d
     home: https://github.com/beeinventor/charts/tree/master/beeinventor/chirpstack
     icon: https://www.chirpstack.io/static/logo.png
     keywords:
@@ -231,6 +231,39 @@ entries:
     urls:
     - https://BeeInventor.github.io/charts/chirpstack-0.1.0.tgz
     version: 0.1.0
+  keycloak:
+  - annotations:
+      category: DeveloperTools
+    apiVersion: v2
+    appVersion: 14.0.0
+    created: "2024-09-26T04:33:13.282978489Z"
+    dependencies:
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - bitnami-common
+      version: 2.x.x
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
+      version: 10.x.x
+    description: Fork from bitnami keycloak 4.0.3, just for patching bitnami-common
+    digest: 9278a5d09cca7560fe1a39a489755a24643de378fab32b8f08af09fc9699f85d
+    home: https://www.keycloak.org
+    icon: https://bitnami.com/assets/stacks/keycloak/img/keycloak-stack-220x234.png
+    keywords:
+    - keycloak
+    - access-management
+    maintainers:
+    - email: ikechang@beeinventor.com
+      name: BeeInventor
+    name: keycloak
+    sources:
+    - https://github.com/beeinventor/charts/keycloak
+    - https://github.com/keycloak/keycloak
+    urls:
+    - https://BeeInventor.github.io/charts/keycloak-4.0.4.tgz
+    version: 4.0.4
   livekit-server:
   - apiVersion: v2
     appVersion: v1.0.0
@@ -248,9 +281,9 @@ entries:
   nsq:
   - apiVersion: v2
     appVersion: 1.2.1
-    created: "2023-05-25T03:11:11.57253528Z"
+    created: "2024-09-26T04:33:13.283644069Z"
     description: A realtime distributed messaging platform
-    digest: 4feccdaddbcedb35ac517b60a3e0c2d4878dc2d4554459f88927f14837c871d5
+    digest: e304651dfc4d3a1235306116ef7545b18d9b10b077a6a243214eaeb2cdafa292
     home: https://github.com/beeinventor/charts/tree/master/beeinventor/nsq
     icon: https://nsq.io/static/img/nsq_blue.png
     keywords:
@@ -620,9 +653,9 @@ entries:
   opendistro-es:
   - apiVersion: v1
     appVersion: 1.13.3
-    created: "2023-05-25T03:11:11.574836781Z"
+    created: "2024-09-26T04:33:13.285650198Z"
     description: Open Distro for Elasticsearch
-    digest: 0de28e1eeba51b62c9472964ef3a059ca15512b2d52fdd8d5adb1881e0ecde0c
+    digest: cc9724128c7c419093b64a8ae7674ab89b0ba36b7541dfe737d9b79b016f998a
     kubeVersion: ^1.10.0-0
     maintainers:
     - email: derek.heldt-werle@viasat.com
@@ -686,4 +719,4 @@ entries:
     urls:
     - https://BeeInventor.github.io/charts/opendistro-es-1.13.2.tgz
     version: 1.13.2
-generated: "2023-05-25T03:11:11.56844018Z"
+generated: "2024-09-26T04:33:13.275162895Z"
