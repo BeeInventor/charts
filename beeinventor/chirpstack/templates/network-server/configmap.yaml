@@ -105,13 +105,13 @@ data:
     #
     # Set this to true when the provided URLs are pointing to a Redis Cluster
     # instance.
-    cluster=false
+    cluster={{ .Values.networkServer.redis.cluster }}
 
     # Master name.
     #
     # Set the master name when the provided URLs are pointing to a Redis Sentinel
     # instance.
-    master_name=""
+    master_name={{ .Values.networkServer.redis.masterName | quote }}
 
     # Connection pool size.
     #

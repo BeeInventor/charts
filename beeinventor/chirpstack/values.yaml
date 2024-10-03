@@ -22,6 +22,8 @@ applicationServer:
     password: ""
     database: 0
     tlsEnabled: false
+    cluster: false
+    masterName: ""
   service:
     annotations: {}
   ingress:
@@ -125,6 +127,8 @@ networkServer:
     password: ""
     database: 0
     tlsEnabled: false
+    cluster: false
+    masterName: ""
   netId: "000000"
   getDownlinkDataDelay: "100ms"
   band:
