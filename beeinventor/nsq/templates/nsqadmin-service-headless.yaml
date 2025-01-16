@@ -6,7 +6,8 @@ metadata:
   labels:
     {{- include "nsq.commonLabels" . | nindent 4 }}
 spec:
-  type: {{ .Values.nsqd.service.type }}
+  type: ClusterIP
+  clusterIP: None
   ports:
   - name: http
     port: 4151
