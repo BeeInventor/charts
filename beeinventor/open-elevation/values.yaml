@@ -1,0 +1,36 @@
+replicaCount: 1
+
+image:
+  repository: openelevation/open-elevation
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations: {}
+  hosts:
+    - host: elevation.local
+      paths:
+        - path: /
+          pathType: Prefix
+
+persistence:
+  enabled: true
+  existingClaim: ""
+  storageClass: ""
+  accessMode: ReadWriteOnce
+  size: 8Gi
+
+tolerations:
+- key: "layer"
+  operator: "Equal"
+  value: "infra"
+  effect: "NoSchedule"
+
+env: {}

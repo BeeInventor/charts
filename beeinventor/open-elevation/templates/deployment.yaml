@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "open-elevation.fullname" . }}
+  labels:
+    {{- include "open-elevation.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "open-elevation.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "open-elevation.selectorLabels" . | nindent 8 }}
+    spec:
+      initContainers:
+        - name: download-srtm
+          image: debian:buster-slim
+          command:
+            - sh
+            - -c
+            - |
+              apt-get update && apt-get install -y wget unar
+              cd /code/data
+              
+              wget https://srtm.csi.cgiar.org/wp-content/uploads/files/250m/SRTM_N_250m_TIF.rar && \
+              wget https://srtm.csi.cgiar.org/wp-content/uploads/files/250m/SRTM_NE_250m_TIF.rar && \
+              wget https://srtm.csi.cgiar.org/wp-content/uploads/files/250m/SRTM_E_250m_TIF.rar && \
+              wget https://srtm.csi.cgiar.org/wp-content/uploads/files/250m/SRTM_SE_250m_TIF.rar && \
+              wget https://srtm.csi.cgiar.org/wp-content/uploads/files/250m/SRTM_S_250m_TIF.rar && \
+              wget https://srtm.csi.cgiar.org/wp-content/uploads/files/250m/SRTM_SW_250m_TIF.rar && \
+              wget https://srtm.csi.cgiar.org/wp-content/uploads/files/250m/SRTM_W_250m_TIF.rar && \
+              wget https://srtm.csi.cgiar.org/wp-content/uploads/files/250m/SRTM_NW_250m_TIF.rar && \
+
+              unar -f SRTM_N_250m_TIF.rar && \
+              unar -f SRTM_NE_250m_TIF.rar && \
+              unar -f SRTM_E_250m_TIF.rar && \
+              unar -f SRTM_SE_250m_TIF.rar && \
+              unar -f SRTM_S_250m_TIF.rar && \
+              unar -f SRTM_SW_250m_TIF.rar && \
+              unar -f SRTM_W_250m_TIF.rar && \
+              unar -f SRTM_NW_250m_TIF.rar && \
+              rm *.rar
+              
+              echo "Downloads and extraction completed. Contents of /code/data:"
+              ls -lh /code/data
+          volumeMounts:
+            - name: data
+              mountPath: /code/data
+          resources:
+            requests:
+              memory: "2Gi"
+              cpu: "500m"
+            limits:
+              memory: "4Gi"
+              cpu: "1000m"
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - name: data
+              mountPath: "/code/data"
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "200m"
+          {{- if .Values.env }}
+          env:
+            {{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
+          {{- end }}
+      volumes:
+        - name: data
+          {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ include "open-elevation.fullname" . }}{{- end }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}

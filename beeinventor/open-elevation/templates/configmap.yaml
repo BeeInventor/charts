@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "open-elevation.fullname" . }}-data
+  labels:
+    {{- include "open-elevation.labels" . | nindent 4 }}
+data:
+  summary.json: |-
+{{ .Files.Get "data/summary.json" | indent 4 }}
