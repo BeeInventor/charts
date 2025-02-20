@@ -3,9 +3,9 @@ entries:
   chirpstack:
   - apiVersion: v2
     appVersion: "3"
-    created: "2025-01-16T14:48:48.193172934Z"
+    created: "2025-02-20T03:10:17.671503048Z"
     description: ChirpStack open-source LoRaWAN® Network Server
-    digest: 5649d3278d25ea40873117f868a5757d52597f09d610feb9c4d09914638b5a5b
+    digest: 319739741945367b6ff58bf4f1fe4ec3b586b50900086c6610f827c8f0849bb9
     home: https://github.com/beeinventor/charts/tree/master/beeinventor/chirpstack
     icon: https://www.chirpstack.io/static/logo.png
     keywords:
@@ -259,7 +259,7 @@ entries:
       category: DeveloperTools
     apiVersion: v2
     appVersion: 14.0.0
-    created: "2025-01-16T14:48:48.198879936Z"
+    created: "2025-02-20T03:10:17.677412352Z"
     dependencies:
     - name: common
       repository: https://charts.bitnami.com/bitnami
@@ -271,7 +271,7 @@ entries:
       repository: https://raw.githubusercontent.com/bitnami/charts/archive-full-index/bitnami
       version: 10.x.x
     description: Fork from bitnami keycloak 4.0.3, just for patching bitnami-common
-    digest: d91fd6d405dbb7e29aead180301b294a3ad4c499bb8e5f4b8a3e1531e00c54af
+    digest: 4cef01fc81794c2df6131ead1712b9800749fff56df28bb4e3d2e462c9ebcf14
     home: https://www.keycloak.org
     icon: https://bitnami.com/assets/stacks/keycloak/img/keycloak-stack-220x234.png
     keywords:
@@ -304,9 +304,9 @@ entries:
   nsq:
   - apiVersion: v2
     appVersion: 1.2.1
-    created: "2025-01-16T14:48:48.200437583Z"
+    created: "2025-02-20T03:10:17.678452322Z"
     description: A realtime distributed messaging platform
-    digest: 0f33000a6e212f1fa5c05f1a8fa34dc37a2b5f14a83422b3a9f23183616b0577
+    digest: 478ecc2da117f5e2fe104e57184532985b17f646e8b403628fe263f410bc8ca4
     home: https://github.com/beeinventor/charts/tree/master/beeinventor/nsq
     icon: https://nsq.io/static/img/nsq_blue.png
     keywords:
@@ -742,12 +742,22 @@ entries:
     urls:
     - https://BeeInventor.github.io/charts/nsq-1.0.0.tgz
     version: 1.0.0
+  open-elevation:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2025-02-20T03:10:17.679211328Z"
+    description: A Helm chart for Open-Elevation server
+    digest: ec6255436a7c2d81f6fdba1572dbfd67b60ee7dfac2c175f1673459925bcf733
+    name: open-elevation
+    urls:
+    - https://BeeInventor.github.io/charts/open-elevation-0.1.0.tgz
+    version: 0.1.0
   opendistro-es:
   - apiVersion: v1
     appVersion: 1.13.3
-    created: "2025-01-16T14:48:48.201723797Z"
+    created: "2025-02-20T03:10:17.680511683Z"
     description: Open Distro for Elasticsearch
-    digest: 064505becbc740d036fc3a3fc7ba33a0407caf43ab6f9e986d4a9c7b62ea8152
+    digest: 06a00ff14b34e028e740ad565215011f9de4ec4773c0d8bcec4e97e3992a166f
     kubeVersion: ^1.10.0-0
     maintainers:
     - email: derek.heldt-werle@viasat.com
@@ -811,4 +821,4 @@ entries:
     urls:
     - https://BeeInventor.github.io/charts/opendistro-es-1.13.2.tgz
     version: 1.13.2
-generated: "2025-01-16T14:48:48.191737272Z"
+generated: "2025-02-20T03:10:17.669400246Z"
