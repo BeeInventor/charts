@@ -1,0 +1,197 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "open-elevation.fullname" . }}
+  labels:
+    {{- include "open-elevation.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "open-elevation.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "open-elevation.selectorLabels" . | nindent 8 }}
+      annotations:
+        checksum/data-regions: {{ .Values.dataRegions | default "global" | sha256sum }}
+    spec:
+      initContainers:
+        - name: download-srtm
+          image: debian:buster-slim
+          command:
+            - bash
+            - -c
+            - |
+              apt-get update && apt-get install -y wget unzip parallel curl jq bash
+              mkdir -p /code/data
+              cd /code/data
+              
+              # Get region selection
+              REGION="{{ .Values.dataRegions | default "global" }}"
+              echo "Selected region mode: $REGION"
+              
+              # Function to handle download with retries
+              download_with_retries() {
+                local url=$1
+                local file=$(basename $url)
+                local max_retries=3
+                local retry=0
+                local success=false
+
+                echo "Downloading $file..."
+                
+                while [ $retry -lt $max_retries ] && [ "$success" = "false" ]; do
+                  if wget -q --show-progress --timeout=30 "$url"; then
+                    echo "✓ Downloaded $file"
+                    
+                    # Try to unzip
+                    if unzip -q "$file"; then
+                      echo "✓ Extracted $file"
+                      rm "$file"
+                      success=true
+                    else
+                      echo "⚠️ Failed to extract $file (attempt $((retry+1)))"
+                      retry=$((retry+1))
+                    fi
+                  else
+                    echo "⚠️ Failed to download $file (attempt $((retry+1)))"
+                    retry=$((retry+1))
+                  fi
+                  
+                  if [ "$success" = "false" ] && [ $retry -lt $max_retries ]; then
+                    echo "Retrying in 5 seconds..."
+                    sleep 5
+                  fi
+                done
+                
+                if [ "$success" = "true" ]; then
+                  return 0
+                else
+                  echo "❌ Failed to process $file after $max_retries attempts"
+                  return 1
+                fi
+              }
+              
+              # Process URLs in batches to avoid "argument list too long" errors
+              process_urls_in_batches() {
+                local batch_size=50
+                local batch_num=1
+                local line_count=$(wc -l < urls.txt)
+                local batch_total=$(( (line_count + batch_size - 1) / batch_size ))
+                
+                echo "Processing $line_count URLs in $batch_total batches of $batch_size..."
+                
+                CORES=$(nproc)
+                PARALLEL_JOBS=$((CORES + 2))
+                echo "Using $PARALLEL_JOBS parallel jobs on $CORES cores"
+                
+                # Create directory for batch files
+                mkdir -p /tmp/batches
+                
+                # Split the URLs file into smaller batches
+                split -l $batch_size urls.txt /tmp/batches/batch_
+                
+                # Process each batch - without using export -f
+                for batch_file in /tmp/batches/batch_*; do
+                  echo "Processing batch $batch_num of $batch_total..."
+                  
+                  # Simple loop for each URL in batch - avoiding xargs and export issues
+                  while read url; do
+                    download_with_retries "$url" &
+                    
+                    # Limit number of background processes
+                    while [ $(jobs -p | wc -l) -ge $PARALLEL_JOBS ]; do
+                      sleep 1
+                    done
+                  done < "$batch_file"
+                  
+                  # Wait for all background jobs to finish
+                  wait
+                  
+                  echo "✓ Completed batch $batch_num"
+                  batch_num=$((batch_num+1))
+                  
+                  # Report progress
+                  completed=$(find /code/data -name "*.tif" | wc -l)
+                  echo "Progress: $completed TIF files downloaded and extracted"
+                  echo "Current storage usage:"
+                  du -sh /code/data
+                done
+                
+                # Cleanup
+                rm -rf /tmp/batches
+                echo "✓ All batches processed!"
+              }
+              
+              # Create URLs list without using heredoc
+              if [ "$REGION" = "minimal" ]; then
+                # Just enough data to make the service work - few tiles
+                echo "https://srtm.csi.cgiar.org/wp-content/uploads/files/srtm_5x5/TIFF/srtm_61_08.zip" > urls.txt
+                echo "https://srtm.csi.cgiar.org/wp-content/uploads/files/srtm_5x5/TIFF/srtm_61_07.zip" >> urls.txt
+                echo "https://srtm.csi.cgiar.org/wp-content/uploads/files/srtm_5x5/TIFF/srtm_60_08.zip" >> urls.txt
+              else
+                # Generate URLs programmatically
+                echo "Generating URLs list for global coverage..."
+                > urls.txt  # Clear/create empty file
+                for x in $(seq -w 0 72); do
+                  for y in $(seq -w 1 24); do
+                    echo "https://srtm.csi.cgiar.org/wp-content/uploads/files/srtm_5x5/TIFF/srtm_${x}_${y}.zip" >> urls.txt
+                  done
+                done
+              fi
+              
+              # Execute the batch processing
+              process_urls_in_batches
+              
+              echo "All downloads and extractions completed!"
+              echo "Final contents of /code/data:"
+              find /code/data -name "*.tif" | wc -l
+              du -sh /code/data
+          volumeMounts:
+            - name: data
+              mountPath: /code/data
+          resources:
+            requests:
+              memory: "2Gi"
+              cpu: "500m"
+            limits:
+              memory: "4Gi"
+              cpu: "1000m"
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          volumeMounts:
+            - name: data
+              mountPath: "/code/data"
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "200m"
+          {{- if .Values.env }}
+          env:
+            {{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
+          {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: data
+          {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ include "open-elevation.fullname" . }}{{- end }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}
