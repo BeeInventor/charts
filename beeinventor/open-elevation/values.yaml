@@ -25,7 +25,7 @@ persistence:
   existingClaim: ""
   storageClass: ""
   accessMode: ReadWriteOnce
-  size: 8Gi
+  size: 30Gi
 
 tolerations:
 - key: "layer"
