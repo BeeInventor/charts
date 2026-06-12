@@ -10,7 +10,6 @@ spec:
   selector:
     matchLabels:
       {{- include "nsq.nsqadmin.selectorLabels" . | nindent 6 }}
-  priorityClassName: {{ .Values.nsqadmin.priorityClassName }}
   template:
     metadata:
       {{- with .Values.nsqadmin.podAnnotations }}
@@ -23,6 +22,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      priorityClassName: {{ .Values.nsqadmin.priorityClassName }}
       securityContext:
         {{- toYaml .Values.nsqadmin.podSecurityContext | nindent 8 }}
       containers:
